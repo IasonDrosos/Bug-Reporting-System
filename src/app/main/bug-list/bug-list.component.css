@@ -1,0 +1,19 @@
+tbody th,
+td {
+  border-right: 1px solid #454d55 !important;
+  width: 222px;
+}
+
+.table-head {
+  font-size: 1.5rem;
+}
+
+
+.table-head:hover {
+  text-shadow: 0px 0px 3px #fff;
+  cursor: pointer;
+}
+
+fa-icon {
+  padding-left: 4px;
+}
