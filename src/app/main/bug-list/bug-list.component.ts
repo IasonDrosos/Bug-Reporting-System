@@ -10,6 +10,9 @@ export class BugListComponent implements OnInit {
   constructor() { }
 
   ngOnInit() {
+    // when component loads we GET bugs unsorted
   }
+
+
 
 }
