@@ -27,7 +27,7 @@ export class BugListComponent implements OnInit {
       if (this.sortedBy.direction === 'asc') {
         this.sortedBy.direction = 'desc';
       } else {
-        this.sortedBy.direction = 'desc';
+        this.sortedBy.direction = 'asc';
       }
     }
 
