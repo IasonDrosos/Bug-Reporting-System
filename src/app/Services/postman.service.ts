@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Sorting } from '../models/sorting';
+import { Sorting } from '../models/sorting.model';
 
 @Injectable({
   providedIn: 'root'
@@ -8,7 +8,7 @@ import { Sorting } from '../models/sorting';
 export class PostmanService {
 
 
-  endpoint = "https://bug-report-system-server.herokuapp.com/bugs";
+  endpoint = 'https://bug-report-system-server.herokuapp.com/bugs';
   constructor(private http: HttpClient) { }
 
   getTheBugs() {
@@ -18,7 +18,7 @@ export class PostmanService {
   }
 
   sortBy(sortedBy: Sorting) {
-    return this.http.get(this.endpoint + '?sort=' + sortedBy.sorted + ',' + sortedBy.direction);
+    return this.http.get(this.endpoint + '?sort=' + sortedBy.column + ',' + sortedBy.direction);
 
   }
 }
