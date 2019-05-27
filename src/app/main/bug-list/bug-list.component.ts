@@ -9,7 +9,7 @@ import { PostmanService } from 'src/app/Services/postman.service';
 })
 export class BugListComponent implements OnInit {
 
-  sortedBy: Sorting = {sorted:'',direction:''};
+  sortedBy: Sorting = { sorted: '', direction: '' };
   mybugs;
   constructor(private postmanService: PostmanService) { }
 
