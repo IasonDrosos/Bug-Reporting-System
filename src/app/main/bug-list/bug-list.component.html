@@ -1,22 +1,42 @@
 <div class="container">
-<table class="table table-dark">
-  <thead>
-    <tr class="text-center">
-      <th (click)="sortTheBugs('title')" scope="col" class=" table-head ">Title  <span *ngIf="stateColumn === 'title'"> <span *ngIf="stateDirection ===2"><fa-icon [icon]="faArrowAltCircleUp"></fa-icon></span> <span *ngIf="stateDirection === 1"><fa-icon [icon]="faArrowAltCircleDown"></fa-icon></span></span></th>
-      <th (click)="sortTheBugs('priority')" scope="col" class="table-head">Priority  <span *ngIf="stateColumn === 'priority'"> <span *ngIf="stateDirection ===2"><fa-icon [icon]="faArrowAltCircleUp"></fa-icon></span> <span *ngIf="stateDirection === 1"><fa-icon [icon]="faArrowAltCircleDown"></fa-icon></span></span></th>
-      <th (click)="sortTheBugs('reporter')" scope="col" class="table-head">Reporter <span *ngIf="stateColumn === 'reporter'"> <span *ngIf="stateDirection ===2"><fa-icon [icon]="faArrowAltCircleUp"></fa-icon></span> <span *ngIf="stateDirection === 1"><fa-icon [icon]="faArrowAltCircleDown"></fa-icon></span></span></th>
-      <th  scope="col" style="font-size: 1.5rem;">Date Created </th>
-      <th (click)="sortTheBugs('status')" scope="col" class="table-head">Status <span *ngIf="stateColumn === 'status'"> <span *ngIf="stateDirection ===2"><fa-icon [icon]="faArrowAltCircleUp"></fa-icon></span> <span *ngIf="stateDirection === 1"><fa-icon [icon]="faArrowAltCircleDown"></fa-icon></span></span></th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr *ngFor="let bug of bugList" class="text-center">
-      <th scope="row">{{bug.title}}</th>
-      <td >{{bug.priority}}</td>
-      <td >{{bug.reporter}}</td>
-      <td >{{bug.createdAt | date}}</td>
-      <td >{{bug.status}}</td>
-    </tr>
-  </tbody>
-</table>
+  <table class="table table-dark">
+    <thead>
+      <tr class="text-center">
+        <th (click)="sortTheBugs('title')" scope="col" class=" table-head ">Title <span *ngIf="stateColumn === 'title'">
+            <span *ngIf="stateDirection ===2">
+              <fa-icon [icon]="faArrowAltCircleUp"></fa-icon>
+            </span> <span *ngIf="stateDirection === 1">
+              <fa-icon [icon]="faArrowAltCircleDown"></fa-icon>
+            </span></span></th>
+        <th (click)="sortTheBugs('priority')" scope="col" class="table-head">Priority <span
+            *ngIf="stateColumn === 'priority'"> <span *ngIf="stateDirection ===2">
+              <fa-icon [icon]="faArrowAltCircleUp"></fa-icon>
+            </span> <span *ngIf="stateDirection === 1">
+              <fa-icon [icon]="faArrowAltCircleDown"></fa-icon>
+            </span></span></th>
+        <th (click)="sortTheBugs('reporter')" scope="col" class="table-head">Reporter <span
+            *ngIf="stateColumn === 'reporter'"> <span *ngIf="stateDirection ===2">
+              <fa-icon [icon]="faArrowAltCircleUp"></fa-icon>
+            </span> <span *ngIf="stateDirection === 1">
+              <fa-icon [icon]="faArrowAltCircleDown"></fa-icon>
+            </span></span></th>
+        <th scope="col" style="font-size: 1.5rem;">Date Created </th>
+        <th (click)="sortTheBugs('status')" scope="col" class="table-head">Status <span
+            *ngIf="stateColumn === 'status'"> <span *ngIf="stateDirection ===2">
+              <fa-icon [icon]="faArrowAltCircleUp"></fa-icon>
+            </span> <span *ngIf="stateDirection === 1">
+              <fa-icon [icon]="faArrowAltCircleDown"></fa-icon>
+            </span></span></th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let bug of bugList" class="text-center">
+        <th scope="row">{{bug.title}}</th>
+        <td>{{bug.priority}}</td>
+        <td>{{bug.reporter}}</td>
+        <td>{{bug.createdAt | date}}</td>
+        <td>{{bug.status}}</td>
+      </tr>
+    </tbody>
+  </table>
 </div>
