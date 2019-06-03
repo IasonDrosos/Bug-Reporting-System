@@ -11,6 +11,7 @@ import { BugListComponent } from './main/bug-list/bug-list.component';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
+import { BugFormComponent } from './main/bug-form/bug-form.component';
 
 @NgModule({
   declarations: [
@@ -18,7 +19,8 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
     HeaderComponent,
     FooterComponent,
     MainComponent,
-    BugListComponent
+    BugListComponent,
+    BugFormComponent
   ],
   imports: [
     BrowserModule,

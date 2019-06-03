@@ -1,5 +1,5 @@
 .bg-deepdark {
   background-color: #272727;
   /* Calculating the height of main component substracting the header and footer from the viewport */
-  /* height: calc(100vh - 177px); */
+  min-height: calc(100vh - 177px);
 }
