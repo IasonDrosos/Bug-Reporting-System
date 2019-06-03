@@ -16,8 +16,8 @@
 
       </tr>
     </thead>
-    <tbody>
-      <tr *ngFor="let bug of bugList" class="text-center">
+    <tbody *ngFor="let bug of bugList">
+      <tr  class="text-center">
         <td class="">{{bug.title | titlecase }}</td>
         <td >
           <span *ngIf="bug.status ==='Done'"> <fa-icon [icon]="faCheck" title="Done"></fa-icon> </span>
@@ -48,7 +48,7 @@
                 </span>
               </div>
               <div class="col-12 col-md-5">
-                <span>
+                <span (click)="showComments(acc)">
                   <fa-layers [fixedWidth]="true" id="commentBugIcon">
                     <fa-icon [icon]="faCircle"></fa-icon>
                     <fa-icon [icon]="faComment" transform="shrink-5"></fa-icon>
@@ -60,7 +60,23 @@
           </div>
         </td>
       </tr>
-
+      <tr>
+        <td colspan="6">
+        <ngb-accordion #acc="ngbAccordion">
+            <ngb-panel>
+              <ng-template ngbPanelContent>
+                Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3 wolf moon officia
+                aute, non cupidatat skateboard dolor brunch. Food truck quinoa nesciunt laborum eiusmod. Brunch 3 wolf moon tempor,
+                sunt aliqua put a bird on it squid single-origin coffee nulla assumenda shoreditch et. Nihil anim keffiyeh helvetica,
+                craft beer labore wes anderson cred nesciunt sapiente ea proident. Ad vegan excepteur butcher vice lomo. Leggings
+                occaecat craft beer farm-to-table, raw denim aesthetic synth nesciunt you probably haven't heard of them accusamus
+                labore sustainable VHS.
+              </ng-template>
+            </ngb-panel>
+          </ngb-accordion>
+        </td>
+       </tr>
     </tbody>
   </table>
-</div>
+
+
