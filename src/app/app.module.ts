@@ -9,6 +9,7 @@ import { FooterComponent } from './footer/footer.component';
 import { MainComponent } from './main/main.component';
 import { BugListComponent } from './main/bug-list/bug-list.component';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+import { BugFormComponent } from './main/bug-form/bug-form.component';
 
 @NgModule({
   declarations: [
@@ -16,7 +17,8 @@ import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
     HeaderComponent,
     FooterComponent,
     MainComponent,
-    BugListComponent
+    BugListComponent,
+    BugFormComponent
   ],
   imports: [
     BrowserModule,
