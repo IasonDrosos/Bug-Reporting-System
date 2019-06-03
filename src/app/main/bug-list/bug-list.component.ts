@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { Sorting } from 'src/app/models/sorting.model';
 import { PostmanService } from 'src/app/Services/postman.service';
-import { faArrowAltCircleUp } from '@fortawesome/free-solid-svg-icons';
-import { faArrowAltCircleDown } from '@fortawesome/free-solid-svg-icons';
+import { faLongArrowAltUp } from '@fortawesome/free-solid-svg-icons';
+import { faLongArrowAltDown } from '@fortawesome/free-solid-svg-icons';
 
 @Component({
   selector: 'app-bug-list',
@@ -10,8 +10,8 @@ import { faArrowAltCircleDown } from '@fortawesome/free-solid-svg-icons';
   styleUrls: ['./bug-list.component.css']
 })
 export class BugListComponent implements OnInit {
-  faArrowAltCircleUp = faArrowAltCircleUp;
-  faArrowAltCircleDown = faArrowAltCircleDown;
+  faLongArrowAltUp = faLongArrowAltUp;
+  faLongArrowAltDown = faLongArrowAltDown;
 
   sortedBy: Sorting = { column: '', direction: '' };
   stateDirection = 0; // 0 none //1 asc // 2 desc
