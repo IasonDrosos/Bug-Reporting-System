@@ -5,49 +5,58 @@
     <h1 class="display-4 text-light pb-5">Edit Bug</h1>
   </div>
   <!-- Form -->
-  <form class="bg-dark p-5" id="bugForm">
+  <form class="bg-dark p-5" id="bugForm" #bugForm="ngForm" (submit)="Print(bugForm)" autocomplete="off">
     <div class="form-group">
       <h2 class="text-light pb-3 mb-5" id="formTitle">Bug Info</h2>
       <div class="row ">
         <div class="col-7">
+          <!-- Priority Radio Buttons -->
           <div class="form-row align-items-center">
             <div class="form-group col-3">
               <p class="h4 text-light pr-3">Priority</p>
             </div>
             <div class="form-group col-9 d-flex justify-content-around">
               <div class="form-check form-check-inline pr-3">
-                <input class="form-check-input" type="radio" name="bugPriority" id="priority1" value="1">
+                <input class="form-check-input" type="radio" #bugPriority="ngModel" name="bugPriority"
+                  [(ngModel)]="bug.priority" id="priority1" value="1">
                 <label class="form-check-label text-light" for="priority1">Minor</label>
               </div>
               <div class="form-check form-check-inline pr-3">
-                <input class="form-check-input" type="radio" name="bugPriority" id="priority2" value="2">
+                <input class="form-check-input" type="radio" #bugPriority="ngModel" name="bugPriority"
+                  [(ngModel)]="bug.priority" id="priority2" value="2">
                 <label class="form-check-label text-light" for="priority2">Major</label>
               </div>
               <div class="form-check form-check-inline pr-3">
-                <input class="form-check-input" type="radio" name="bugPriority" id="priority3" value="3">
+                <input class="form-check-input" type="radio" #bugPriority="ngModel" name="bugPriority"
+                  [(ngModel)]="bug.priority" id="priority3" value="3">
                 <label class="form-check-label text-light" for="priority3">Critical</label>
               </div>
             </div>
           </div>
+          <!-- Title input -->
           <div class="form-row">
             <div class="form-group col-3">
               <label for="bugTitle" class="text-light h4">Title</label>
             </div>
             <div class="form-group col-9">
-              <input type="text" class="form-control" id="bugTitle" placeholder="Bug Title" minlength="5" required>
+              <input type="text" class="form-control" minlength="4" required #bugTitle="ngModel" name="bugTitle"
+                [(ngModel)]="bug.title" id="bugTitle" placeholder="Bug Title">
             </div>
           </div>
+          <!-- Description Input -->
           <div class="form-row">
             <div class="form-group col-3">
               <label for="bugDescription" class="text-light h4">Description</label>
             </div>
             <div class="form-group col-9">
-              <input type="text" class="form-control" id="bugDescription" placeholder="Describe the Bug" minlength="5"
+              <input type="text" class="form-control" #bugDescription="ngModel" name="bugDescription"
+                [(ngModel)]="bug.description" id="bugDescription" placeholder="Describe the Bug" minlength="5"
                 maxlength="150" required>
             </div>
           </div>
         </div>
         <div class="col-5">
+          <!-- Autofill Date -->
           <div class="form-row">
             <div class="form-group col-3">
               <label for="bugDate" class="text-light h4">Date</label>
@@ -57,12 +66,14 @@
                 disabled>{{bug.createdAt | date: "dd/MM/yy"}}</span>
             </div>
           </div>
+          <!-- Reporter Dropdown -->
           <div class="form-row">
             <div class="form-group col-3">
               <label for="bugReporter" class="text-light h4">Reporter</label>
             </div>
             <div class="form-group col-9">
-              <select class="custom-select" id="bugReporter" required>
+              <select class="custom-select" #bugReporter="ngModel" name="bugReporter" [(ngModel)]="bug.reporter"
+                id="bugReporter" required>
                 <option selected hidden>Choose your position</option>
                 <option value="QA">QA</option>
                 <option value="PO">PO</option>
@@ -70,12 +81,14 @@
               </select>
             </div>
           </div>
+          <!-- Satus Dropdown -->
           <div class="form-row">
             <div class="form-group col-3">
               <label for="bugStatus" class="text-light h4">Status</label>
             </div>
             <div class="form-group col-9">
-              <select class="custom-select bg-dark text-light" id="bugStatus" disabled>
+              <select class="custom-select bg-dark text-light" #bugStatus="ngModel" name="bugStatus"
+                [(ngModel)]="bug.status" id="bugStatus" required disabled>
                 <option selected hidden>Pending</option>
                 <option value="Ready for Test">Ready for Test</option>
                 <option value="Done">Done</option>
@@ -90,32 +103,37 @@
     <h2 class="text-light pb-3 my-5" id="formTitle">Comment</h2>
     <div class="row ">
       <div class="col-7">
+        <!-- Comment Whitespace -->
         <div class="form-row">
           <div class="form-group col-3">
             <label for="bugComment" class="text-light h4">Comment</label>
           </div>
           <div class="form-group col-9">
-            <textarea type="text" class="form-control" id="bugComment" placeholder="Type your comment here!"
-              minlength="5" maxlength="150" required></textarea>
+            <textarea type="text" class="form-control" #CommentDescription="ngModel" name="CommentDescription"
+              [(ngModel)]="comment.description" id="bugComment" placeholder="Type your comment here!" minlength="5"
+              maxlength="150" required></textarea>
           </div>
         </div>
       </div>
       <div class="col-5">
+        <!-- Comment Reporter -->
         <div class="form-row">
           <div class="form-group col-3">
             <label for="bugName" class="text-light h4">Name</label>
           </div>
           <div class="form-group col-9">
-            <input type="text" class="form-control" id="bugName" placeholder="Bug Title" minlength="5" required>
+            <input type="text" class="form-control" #CommentReporter="ngModel" name="CommentReporter"
+              [(ngModel)]="comment.reporter" id="bugName" placeholder="Type your Name" minlength="5" required>
           </div>
         </div>
       </div>
     </div>
+    <!-- Submit Button -->
     <div class="d-flex justify-content-end">
       <button type="submit" class="btn btn-primary px-5">Submit</button>
     </div>
   </form>
-<!-- Comment List -->
+  <!-- Comment List -->
   <div class="form-group bg-dark p-5 mt-5" id="bugForm">
     <h2 class="text-light pb-3 mb-3" id="formTitle">Bug Comments</h2>
     <div>
@@ -140,3 +158,5 @@
         </div>
       </div>
     </div>
+  </div>
+</div>

@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { PostmanService } from 'src/app/Services/postman.service';
+import { NgForm } from '@angular/forms';
 
 @Component({
   selector: 'app-bug-form',
@@ -7,18 +8,21 @@ import { PostmanService } from 'src/app/Services/postman.service';
   styleUrls: ['./bug-form.component.css']
 })
 export class BugFormComponent implements OnInit {
-  bug: any = {
-    id: '',
+  bugID: any;
+
+  bug = {
     title: '',
     description: '',
     priority: 0,
     reporter: '',
-    status: '',
+    status: 'Pending',
     createdAt: new Date(),
-    comments: [{
-      reporter: '',
-      description: ''
-    }]
+    comments: []
+  };
+
+  comment = {
+    reporter: '',
+    description: ''
   };
 
   buglist;
@@ -29,7 +33,11 @@ export class BugFormComponent implements OnInit {
   ngOnInit() {
     this.postmanService.getTheBugs().subscribe(data => { this.buglist = data; console.log(this.buglist); } );
   }
-
+  Print(form: NgForm) {
+    this.bug.comments.push(this.comment);
+    console.log(this.bug);
+    console.log(form.status);
+  }
 
 
 }

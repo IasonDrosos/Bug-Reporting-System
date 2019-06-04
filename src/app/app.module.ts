@@ -10,6 +10,7 @@ import { MainComponent } from './main/main.component';
 import { BugListComponent } from './main/bug-list/bug-list.component';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { BugFormComponent } from './main/bug-form/bug-form.component';
+import { FormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -24,7 +25,8 @@ import { BugFormComponent } from './main/bug-form/bug-form.component';
     BrowserModule,
     AppRoutingModule,
     HttpClientModule,
-    FontAwesomeModule
+    FontAwesomeModule,
+    FormsModule
   ],
   providers: [],
   bootstrap: [AppComponent]
