@@ -3,6 +3,9 @@ import { Sorting } from 'src/app/models/sorting.model';
 import { PostmanService } from 'src/app/Services/postman.service';
 import { faLongArrowAltUp } from '@fortawesome/free-solid-svg-icons';
 import { faLongArrowAltDown, faCircle, faPlusCircle, faPencilAlt, faComment, faTimes, faCheck, faExclamation } from '@fortawesome/free-solid-svg-icons';
+import { NgbAccordion } from '@ng-bootstrap/ng-bootstrap';
+import { empty } from 'rxjs';
+
 
 @Component({
   selector: 'app-bug-list',
@@ -25,6 +28,7 @@ export class BugListComponent implements OnInit {
   stateColumn = '';
 
   bugList;
+  expanded = false;
   constructor(private postmanService: PostmanService) { }
 
   ngOnInit() {
@@ -51,6 +55,14 @@ export class BugListComponent implements OnInit {
     }
 
     this.postmanService.sortBy(this.sortedBy).subscribe(data => { this.bugList = data; console.log(data); });
+
+  }
+  showComments(accordion: NgbAccordion) {
+    if (accordion.activeIds.length === 0) {
+      accordion.expandAll();
+    } else {
+      accordion.collapseAll();
+    }
 
   }
 

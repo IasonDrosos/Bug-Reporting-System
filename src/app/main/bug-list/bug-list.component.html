@@ -16,8 +16,8 @@
 
       </tr>
     </thead>
-    <tbody>
-      <tr *ngFor="let bug of bugList" class="text-center">
+    <tbody *ngFor="let bug of bugList">
+      <tr  class="text-center">
         <td class="">{{bug.title | titlecase }}</td>
         <td >
           <span *ngIf="bug.status ==='Done'"> <fa-icon [icon]="faCheck" title="Done"></fa-icon> </span>
@@ -48,7 +48,7 @@
                 </span>
               </div>
               <div class="col-12 col-md-5">
-                <span>
+                <span (click)="showComments(acc)">
                   <fa-layers [fixedWidth]="true" id="commentBugIcon">
                     <fa-icon [icon]="faCircle"></fa-icon>
                     <fa-icon [icon]="faComment" transform="shrink-5"></fa-icon>
@@ -60,7 +60,39 @@
           </div>
         </td>
       </tr>
-
+      <tr>
+        <td colspan="6">
+        <ngb-accordion #acc="ngbAccordion">
+            <ngb-panel>
+              <ng-template ngbPanelContent>
+                  <div class="bg-dark p-5 mt-5">
+                      <div>
+                        <div class="row mb-2">
+                          <div class="col-3">
+                            <span class="text-light">Name</span>
+                          </div>
+                          <div class="col-9">
+                            <span class="text-light">Comment</span>
+                          </div>
+                        </div>
+                        <div *ngFor="let comment of bug.comments">
+                            <div class="row">
+                              <div class="col-3">
+                                <span class="text-light">{{comment.reporter}}</span>
+                              </div>
+                              <div class="col-9">
+                                <span class="text-light">{{comment.description}}</span>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+              </ng-template>
+            </ngb-panel>
+          </ngb-accordion>
+        </td>
+       </tr>
     </tbody>
   </table>
-</div>
+
+

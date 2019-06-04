@@ -9,6 +9,8 @@ import { FooterComponent } from './footer/footer.component';
 import { MainComponent } from './main/main.component';
 import { BugListComponent } from './main/bug-list/bug-list.component';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+
 import { BugFormComponent } from './main/bug-form/bug-form.component';
 import { FormsModule } from '@angular/forms';
 
@@ -26,7 +28,9 @@ import { FormsModule } from '@angular/forms';
     AppRoutingModule,
     HttpClientModule,
     FontAwesomeModule,
-    FormsModule
+    FormsModule,
+    NgbModule
+
   ],
   providers: [],
   bootstrap: [AppComponent]
