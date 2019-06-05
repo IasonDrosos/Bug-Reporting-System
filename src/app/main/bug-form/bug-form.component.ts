@@ -8,7 +8,7 @@ import { NgForm } from '@angular/forms';
   styleUrls: ['./bug-form.component.css']
 })
 export class BugFormComponent implements OnInit {
-  bugID: any;
+  bugID: any = '5cf5ce46416b320017c3d898';
 
   bug = {
     title: '',
@@ -31,7 +31,7 @@ export class BugFormComponent implements OnInit {
   constructor(private postmanService: PostmanService) { }
 
   ngOnInit() {
-    this.postmanService.getTheBugs().subscribe(data => { this.buglist = data; console.log(this.buglist); } );
+    this.postmanService.getBugById(this.bugID).subscribe(data => { this.bug = data; console.log(this.bug); } );
   }
   Print(form: NgForm) {
     this.bug.comments.push(this.comment);
