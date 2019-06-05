@@ -3,6 +3,7 @@ import { Sorting } from 'src/app/models/sorting.model';
 import { PostmanService } from 'src/app/Services/postman.service';
 import { faLongArrowAltUp } from '@fortawesome/free-solid-svg-icons';
 import { faLongArrowAltDown, faCircle, faPlusCircle, faPencilAlt, faComment, faTimes, faCheck, faExclamation } from '@fortawesome/free-solid-svg-icons';
+import {Router} from '@angular/router';
 import { NgbAccordion } from '@ng-bootstrap/ng-bootstrap';
 import { empty } from 'rxjs';
 
@@ -30,7 +31,7 @@ export class BugListComponent implements OnInit {
   bugList;
   collapsedRow = [];
   // expanded = false;
-  constructor(private postmanService: PostmanService) { }
+  constructor(private postmanService: PostmanService, private router: Router) { }
 
   ngOnInit() {
 
@@ -70,7 +71,10 @@ export class BugListComponent implements OnInit {
     this.collapsedRow[rowIndex] = !this.collapsedRow[rowIndex];
   }
 
-
-
+  editBug(bugID) {
+    // this.router.navigate(['edit/' + bugID]);
+    console.log(bugID);
+    this.router.navigate(['edit', bugID]);
+    }
 
 }

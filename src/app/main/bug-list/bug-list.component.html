@@ -21,7 +21,7 @@
     </thead>
     <tbody *ngFor="let bug of bugList;let i=index;">
       <tr  class="text-center">
-        <td class="">{{ (bug.title.length>23)? (bug.title | slice:0:20)+'...':(bug.title) }}</td>
+        <td class="">{{ (bug.title===!null && bug.title.length>23)? (bug.title | slice:0:20)+'...':(bug.title) }}</td>
         <td >
           <span *ngIf="bug.status ==='Done'"> <fa-icon [icon]="faCheck" title="Done"></fa-icon> </span>
           <span *ngIf="bug.status ==='Rejected'"> <fa-icon [icon]="faTimes" title="Rejected"></fa-icon> </span>
@@ -43,7 +43,7 @@
           <div class="container" id="edit-comment-icons">
             <div class="row">
               <div class="col-12 col-md-5 mr-1 d-flex  justify-content-around">
-                <span>
+                <span (click)="editBug(bug.id)">
                   <fa-layers [fixedWidth]="true" id="editBugIcon">
                     <fa-icon [icon]="faCircle"></fa-icon>
                     <fa-icon [icon]="faPencilAlt" transform="shrink-7"></fa-icon>
