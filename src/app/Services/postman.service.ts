@@ -1,12 +1,19 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Sorting } from '../models/sorting.model';
+import { Bug } from '../models/bug.model';
 
 @Injectable({
   providedIn: 'root'
 })
 export class PostmanService {
 
+  httpOptions = {
+    headers: new HttpHeaders({
+      'Content-Type': 'application/json',
+      Authorization: 'my-auth-token'
+    })
+  };
 
   endpoint = 'https://bug-report-system-server.herokuapp.com/bugs';
   constructor(private http: HttpClient) { }
@@ -19,6 +26,19 @@ export class PostmanService {
 
   sortBy(sortedBy: Sorting) {
     return this.http.get(this.endpoint + '?sort=' + sortedBy.column + ',' + sortedBy.direction);
+
+  }
+
+  editBug(bug: Bug) {
+
+    return this.http.put(this.endpoint + '/' + bug.id, bug, this.httpOptions);
+
+
+  }
+
+  createBug(bug: Bug)
+  {
+    return this.http.post(this.endpoint, bug, this.httpOptions);
 
   }
 }

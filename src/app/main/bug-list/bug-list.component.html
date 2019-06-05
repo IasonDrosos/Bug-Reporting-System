@@ -54,7 +54,6 @@
                     <fa-icon [icon]="faComment" transform="shrink-5"></fa-icon>
                   </fa-layers>
                 </span>
-
               </div>
             </div>
           </div>
@@ -67,15 +66,18 @@
               <ng-template ngbPanelContent>
                   <div class="bg-dark p-5 mt-5">
                       <div>
-                        <div class="row mb-2">
-                          <div class="col-3">
-                            <span class="text-light">Name</span>
-                          </div>
-                          <div class="col-9">
-                            <span class="text-light">Comment</span>
-                          </div>
-                        </div>
-                        <div *ngFor="let comment of bug.comments">
+
+                        <div *ngIf="bug.comments?.length == 0 || bug.comments == null; else elseBlock">There are no comments currently.</div>
+                        <ng-template #elseBlock>
+                          <div *ngFor="let comment of bug.comments">
+                              <div class="row mb-2">
+                                  <div class="col-3">
+                                    <span class="text-light">Name</span>
+                                  </div>
+                                  <div class="col-9">
+                                    <span class="text-light">Comment</span>
+                                  </div>
+                                </div>
                             <div class="row">
                               <div class="col-3">
                                 <span class="text-light">{{comment.reporter}}</span>
@@ -85,8 +87,10 @@
                               </div>
                             </div>
                           </div>
+                        </ng-template>
+                          </div>
                         </div>
-                      </div>
+
               </ng-template>
             </ngb-panel>
           </ngb-accordion>
