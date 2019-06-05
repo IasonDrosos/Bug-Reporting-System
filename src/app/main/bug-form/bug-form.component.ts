@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { PostmanService } from 'src/app/Services/postman.service';
 import { NgForm } from '@angular/forms';
-
+import { Bug } from 'src/app/models/bug.model';
+import { Comment } from 'src/app/models/comment.model';
 @Component({
   selector: 'app-bug-form',
   templateUrl: './bug-form.component.html',
@@ -10,20 +11,9 @@ import { NgForm } from '@angular/forms';
 export class BugFormComponent implements OnInit {
   bugID: any;
 
-  bug = {
-    title: '',
-    description: '',
-    priority: 0,
-    reporter: '',
-    status: 'Pending',
-    createdAt: new Date(),
-    comments: []
-  };
+  bug: Bug;
 
-  comment = {
-    reporter: '',
-    description: ''
-  };
+  comment: Comment;
 
   buglist;
 
@@ -38,6 +28,19 @@ export class BugFormComponent implements OnInit {
     console.log(this.bug);
     console.log(form.status);
   }
+
+submitForm()
+{
+  if(this.bugID == null)
+  {
+    this.postmanService.createBug(this.bug);
+  }else
+  {
+    this.postmanService.editBug(this.bug);
+  }
+
+
+}
 
 
 }
