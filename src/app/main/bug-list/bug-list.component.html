@@ -1,5 +1,5 @@
-<div class="container">
-  <table class="table table-dark">
+<div class="container table-responsive-lg">
+  <table class="table  table-dark">
     <thead>
       <tr class="text-center">
         <th (click)="sortTheBugs('title')" scope="col" class=" table-head border-top-none">Title  <span *ngIf="stateColumn === 'title'"> <span *ngIf="stateDirection ===2"><fa-icon [icon]="faLongArrowAltUp"></fa-icon></span> <span *ngIf="stateDirection === 1"><fa-icon [icon]="faLongArrowAltDown"></fa-icon></span></span></th>
@@ -8,29 +8,32 @@
         <th (click)="sortTheBugs('reporter')" scope="col" class="table-head border-top-none">Reporter <span *ngIf="stateColumn === 'reporter'"> <span *ngIf="stateDirection ===2"><fa-icon [icon]="faLongArrowAltUp"></fa-icon></span> <span *ngIf="stateDirection === 1"><fa-icon [icon]="faLongArrowAltDown"></fa-icon></span></span></th>
         <th  scope="col" class="border-top-none" style="font-size: 1.5rem;">Date Created </th>
         <th scope="col" class="border-top-none">
-          <fa-layers [fixedWidth]="true" id="addBugIcon">
-            <fa-icon [icon]="faCircle"></fa-icon>
-            <fa-icon [icon]="faPlusCircle" transform="shrink-1"></fa-icon>
-          </fa-layers>
+          <div class="container ">
+            <fa-layers [fixedWidth]="true" id="addBugIcon">
+              <fa-icon [icon]="faCircle" class="pl-0 ml-0"></fa-icon>
+              <fa-icon [icon]="faPlusCircle" transform="shrink-1"></fa-icon>
+            </fa-layers>
+          </div>
         </th>
+
 
       </tr>
     </thead>
-    <tbody *ngFor="let bug of bugList">
+    <tbody *ngFor="let bug of bugList;let i=index;">
       <tr  class="text-center">
-        <td class="">{{bug.title | titlecase }}</td>
+        <td class="">{{ (bug.title.length>23)? (bug.title | slice:0:20)+'...':(bug.title) }}</td>
         <td >
           <span *ngIf="bug.status ==='Done'"> <fa-icon [icon]="faCheck" title="Done"></fa-icon> </span>
           <span *ngIf="bug.status ==='Rejected'"> <fa-icon [icon]="faTimes" title="Rejected"></fa-icon> </span>
           <span *ngIf="bug.status ==='Ready for test'"> <fa-icon [icon]="faExclamation" title="Ready for test"></fa-icon> </span>
           <span *ngIf="bug.status ==='Pending'"> Pending... </span>
-          <span *ngIf="bug.status ===''"> Status is empty </span>
+          <span *ngIf="bug.status ===''"> Not Valid </span>
         </td>
         <td >
-            <span *ngIf="bug.priority === 1" style="color: yellow;"> Minor </span>
-            <span *ngIf="bug.priority === 2" style="color: orange;"> Major </span>
-            <span *ngIf="bug.priority === 3" style="color: rgb(255, 42, 42);"> Critical </span>
-            <span *ngIf="bug.priority > 3 || bug.priority < 1" style="color: rgb(255, 42, 42);"> POIOS TO ANEBASE </span>
+          <span *ngIf="bug.priority === 1" style="color: yellow;"> Minor </span>
+          <span *ngIf="bug.priority === 2" style="color: orange;"> Major </span>
+          <span *ngIf="bug.priority === 3" style="color: rgb(255, 42, 42);"> Critical </span>
+          <span *ngIf="bug.priority > 3 || bug.priority < 1" style="color: rgb(255, 42, 42);"> Not Valid </span>
 
 
         </td>
@@ -48,7 +51,7 @@
                 </span>
               </div>
               <div class="col-12 col-md-5">
-                <span (click)="showComments(acc)">
+                <span (click)="changeCollapseStatus(i)">
                   <fa-layers [fixedWidth]="true" id="commentBugIcon">
                     <fa-icon [icon]="faCircle"></fa-icon>
                     <fa-icon [icon]="faComment" transform="shrink-5"></fa-icon>
@@ -60,39 +63,36 @@
           </div>
         </td>
       </tr>
-      <tr>
+      <tr *ngIf="!collapsedRow[i]">
         <td colspan="6">
-        <ngb-accordion #acc="ngbAccordion">
-            <ngb-panel>
-              <ng-template ngbPanelContent>
-                  <div class="bg-dark p-5 mt-5">
-                      <div>
-                        <div class="row mb-2">
-                          <div class="col-3">
-                            <span class="text-light">Name</span>
-                          </div>
-                          <div class="col-9">
-                            <span class="text-light">Comment</span>
-                          </div>
-                        </div>
-                        <div *ngFor="let comment of bug.comments">
-                            <div class="row">
-                              <div class="col-3">
-                                <span class="text-light">{{comment.reporter}}</span>
-                              </div>
-                              <div class="col-9">
-                                <span class="text-light">{{comment.description}}</span>
-                              </div>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-              </ng-template>
-            </ngb-panel>
-          </ngb-accordion>
+          <div id="collapseExample" [ngbCollapse]="collapsedRow[i]">
+            <div class="bg-dark p-4">
+              <div>
+                <div class="row mb-2">
+                  <div class="col-3">
+                    <span class="text-light">Name</span>
+                  </div>
+                  <div class="col-9">
+                    <span class="text-light">Comment</span>
+                  </div>
+                </div>
+                <div *ngFor="let comment of bug.comments">
+                  <div class="row">
+                    <div class="col-3">
+                      <span class="text-light">{{comment.reporter}}</span>
+                    </div>
+                    <div class="col-9">
+                      <span class="text-light">{{comment.description}}</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
         </td>
-       </tr>
+      </tr>
     </tbody>
   </table>
+</div>
 
 
