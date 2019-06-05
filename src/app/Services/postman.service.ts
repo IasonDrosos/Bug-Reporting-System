@@ -36,8 +36,7 @@ export class PostmanService {
 
   }
 
-  createBug(bug: Bug)
-  {
+  createBug(bug: Bug) {
     return this.http.post(this.endpoint, bug, this.httpOptions);
 
   }

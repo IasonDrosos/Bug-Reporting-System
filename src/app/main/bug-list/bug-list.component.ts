@@ -28,12 +28,18 @@ export class BugListComponent implements OnInit {
   stateColumn = '';
 
   bugList;
-  expanded = false;
+  collapsedRow = [];
+  // expanded = false;
   constructor(private postmanService: PostmanService) { }
 
   ngOnInit() {
 
-    this.postmanService.getTheBugs().subscribe(data => { this.bugList = data; console.log(data); });
+    this.postmanService.getTheBugs().subscribe(data => {
+      this.bugList = data;
+      this.collapsedRow.length = this.bugList.length;
+      this.collapsedRow.fill(true);
+      console.log(data);
+    });
 
   }
 
@@ -54,17 +60,16 @@ export class BugListComponent implements OnInit {
       }
     }
 
-    this.postmanService.sortBy(this.sortedBy).subscribe(data => { this.bugList = data; console.log(data); });
+    this.postmanService.sortBy(this.sortedBy).subscribe(data => { this.bugList = data;
+      this.collapsedRow.fill(true);
+    });
 
   }
-  showComments(accordion: NgbAccordion) {
-    if (accordion.activeIds.length === 0) {
-      accordion.expandAll();
-    } else {
-      accordion.collapseAll();
-    }
 
+  changeCollapseStatus(rowIndex: number) {
+    this.collapsedRow[rowIndex] = !this.collapsedRow[rowIndex];
   }
+
 
 
 
