@@ -5,7 +5,7 @@ import { faLongArrowAltUp } from '@fortawesome/free-solid-svg-icons';
 import { faLongArrowAltDown, faCircle, faPlusCircle, faPencilAlt, faComment, faTimes, faCheck, faExclamation } from '@fortawesome/free-solid-svg-icons';
 import {Router} from '@angular/router';
 import { NgbAccordion } from '@ng-bootstrap/ng-bootstrap';
-import { empty } from 'rxjs';
+import { empty, Subscriber } from 'rxjs';
 
 
 @Component({
