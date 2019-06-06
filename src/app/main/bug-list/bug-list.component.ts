@@ -28,15 +28,22 @@ export class BugListComponent implements OnInit {
   stateDirection = 0; // 0 none //1 asc // 2 desc
   stateColumn = '';
 
-  bugList;
+  bugList = [];
   collapsedRow = [];
-  // expanded = false;
+  // validStatusRow = [];
   constructor(private postmanService: PostmanService, private router: Router) { }
 
   ngOnInit() {
 
-    this.postmanService.getTheBugs().subscribe(data => {
+    this.postmanService.getTheBugs().subscribe((data: []) => {
       this.bugList = data;
+
+      this.bugList.map(bug => {
+        bug.title = bug.title.toLowerCase().charAt(0).toUpperCase() + bug.title.slice(1);
+        bug.status = bug.status.toLowerCase().charAt(0).toUpperCase() + bug.status.slice(1);
+        return bug;
+      });
+
       this.collapsedRow.length = this.bugList.length; //  me auto sigoureuoume oti to collapsedRow array 8a exei toses 8eseis oso kai to bugList pou erxetai
       this.collapsedRow.fill(true);
       console.log(data);

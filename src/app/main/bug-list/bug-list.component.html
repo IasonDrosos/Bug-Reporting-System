@@ -47,7 +47,7 @@
           <span *ngIf="bug.status ==='Rejected'"> <fa-icon [icon]="faTimes" title="Rejected"></fa-icon> </span>
           <span *ngIf="bug.status ==='Ready for test'"> <fa-icon [icon]="faExclamation" title="Ready for test"></fa-icon> </span>
           <span *ngIf="bug.status ==='Pending'"> Pending... </span>
-          <span *ngIf="bug.status ===''"> Not Valid </span>
+          <span *ngIf="bug.status !=='Done' && bug.status !=='Rejected' && bug.status !=='Ready for test' && bug.status !=='Pending'"> Not Valid </span>
         </td>
         <td>
           <span *ngIf="bug.priority === 1" style="color: yellow;"> Minor </span>
