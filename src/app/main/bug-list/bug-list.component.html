@@ -41,7 +41,7 @@
     </thead>
     <tbody *ngFor="let bug of bugList;let i=index;">
       <tr  class="text-center">
-        <td class="">{{ (bug.title===!null && bug.title.length>23)? (bug.title | slice:0:20)+'...':(bug.title) }}</td>
+        <td class="">{{ (bug.title && bug.title.length>20)? (bug.title | slice:0:17)+'...':'yea' }}</td>
         <td >
           <span *ngIf="bug.status ==='Done'"> <fa-icon [icon]="faCheck" title="Done"></fa-icon> </span>
           <span *ngIf="bug.status ==='Rejected'"> <fa-icon [icon]="faTimes" title="Rejected"></fa-icon> </span>
@@ -83,7 +83,7 @@
         </td>
       </tr>
       <tr *ngIf="!collapsedRow[i]">
-        <td colspan="6">
+        <td colspan="6" style="border-right: none !important;">
           <div id="collapseExample" [ngbCollapse]="collapsedRow[i]">
             <div class="bg-dark p-4">
               <div>

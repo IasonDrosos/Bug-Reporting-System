@@ -3,7 +3,7 @@ import { Sorting } from 'src/app/models/sorting.model';
 import { PostmanService } from 'src/app/Services/postman.service';
 import { faLongArrowAltUp } from '@fortawesome/free-solid-svg-icons';
 import { faLongArrowAltDown, faCircle, faPlusCircle, faPencilAlt, faComment, faTimes, faCheck, faExclamation } from '@fortawesome/free-solid-svg-icons';
-import {Router} from '@angular/router';
+import { Router } from '@angular/router';
 import { NgbAccordion } from '@ng-bootstrap/ng-bootstrap';
 import { empty, Subscriber } from 'rxjs';
 
@@ -37,7 +37,7 @@ export class BugListComponent implements OnInit {
 
     this.postmanService.getTheBugs().subscribe(data => {
       this.bugList = data;
-      this.collapsedRow.length = this.bugList.length;
+      this.collapsedRow.length = this.bugList.length; //  me auto sigoureuoume oti to collapsedRow array 8a exei toses 8eseis oso kai to bugList pou erxetai
       this.collapsedRow.fill(true);
       console.log(data);
     });
@@ -61,7 +61,8 @@ export class BugListComponent implements OnInit {
       }
     }
 
-    this.postmanService.sortBy(this.sortedBy).subscribe(data => { this.bugList = data;
+    this.postmanService.sortBy(this.sortedBy).subscribe(data => {
+      this.bugList = data;
       this.collapsedRow.fill(true);
     });
 
@@ -75,6 +76,6 @@ export class BugListComponent implements OnInit {
     // this.router.navigate(['edit/' + bugID]);
     console.log(bugID);
     this.router.navigate(['edit', bugID]);
-    }
+  }
 
 }

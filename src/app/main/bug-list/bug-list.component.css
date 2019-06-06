@@ -99,7 +99,3 @@ fa-icon {
 #edit-comment-icons fa-layers {
   vertical-align: middle !important;
 }
-
-@media only screen and (max-width: 600px) {
-  body {}
-}
