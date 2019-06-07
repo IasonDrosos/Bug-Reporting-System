@@ -1,4 +1,6 @@
-<div class="container">
+<div *ngIf="bug">
+<div class="bg-deepdark p-5">
+  <div class="container">
   <!-- Title -->
   <div class="d-flex justify-content-center">
     <h1 class="display-4 text-light pb-5">Add a Bug</h1>
@@ -18,17 +20,17 @@
             <div class="form-group col-9 d-flex justify-content-around">
               <div class="form-check form-check-inline pr-3">
                 <input class="form-check-input" type="radio" #bugPriority="ngModel" name="bugPriority"
-                  [(ngModel)]="bug.priority" id="priority1" value="1">
+                  [(ngModel)]="bug.priority" id="priority1" [value]=1>
                 <label class="form-check-label text-light" for="priority1">Minor</label>
               </div>
               <div class="form-check form-check-inline pr-3">
                 <input class="form-check-input" type="radio" #bugPriority="ngModel" name="bugPriority"
-                  [(ngModel)]="bug.priority" id="priority2" value="2">
+                  [(ngModel)]="bug.priority" id="priority2" [value]=2>
                 <label class="form-check-label text-light" for="priority2">Major</label>
               </div>
               <div class="form-check form-check-inline pr-3">
                 <input class="form-check-input" type="radio" #bugPriority="ngModel" name="bugPriority"
-                  [(ngModel)]="bug.priority" id="priority3" value="3">
+                  [(ngModel)]="bug.priority" id="priority3" [value]=3>
                 <label class="form-check-label text-light" for="priority3">Critical</label>
               </div>
             </div>
@@ -145,7 +147,8 @@
           <span class="h4 text-light">Comment</span>
         </div>
       </div>
-      <div *ngFor="let bug of buglist">
+      <!-- <div *ngFor="let bug of buglist"> -->
+          <span>This is a span</span>
         <div *ngFor="let comment of bug.comments">
           <div class="row">
             <div class="col-3">
@@ -156,7 +159,9 @@
             </div>
           </div>
         </div>
-      </div>
+      <!-- </div> -->
     </div>
   </div>
+</div>
+</div>
 </div>

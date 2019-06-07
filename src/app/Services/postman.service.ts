@@ -19,14 +19,15 @@ export class PostmanService {
   constructor(private http: HttpClient) { }
 
   getTheBugs() {
-
     return this.http.get(this.endpoint);
+  }
 
+  getBugById(bugId) {
+    return this.http.get(this.endpoint + '/' + bugId);
   }
 
   sortBy(sortedBy: Sorting) {
     return this.http.get(this.endpoint + '?sort=' + sortedBy.column + ',' + sortedBy.direction);
-
   }
 
   editBug(bug: Bug) {

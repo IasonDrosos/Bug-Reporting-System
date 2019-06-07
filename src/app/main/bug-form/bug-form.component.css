@@ -5,3 +5,9 @@
 #formTitle {
   border-bottom: 1px solid #454d55;
 }
+
+.bg-deepdark {
+  background-color: #272727;
+  /* Calculating the height of main component substracting the header and footer from the viewport */
+  min-height: calc(100vh - 177px);
+}
