@@ -7,7 +7,7 @@ import { BugFormComponent } from './main/bug-form/bug-form.component';
 export const routes: Routes = [
   { path: '', component: MainComponent, pathMatch: 'full' },
   { path: 'edit/:id', component: BugFormComponent},
-  { path: 'edit', component: BugFormComponent},
+  { path: 'create', component: BugFormComponent},
   { path: '**', redirectTo: '' }
 ];
 

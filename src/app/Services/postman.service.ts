@@ -31,10 +31,10 @@ export class PostmanService {
   }
 
   editBug(bug: Bug) {
-    return this.http.put(this.endpoint + '/' + bug.id, bug, this.httpOptions);
+    return this.http.put(this.endpoint + '/' + bug.id, bug, this.httpOptions).subscribe(data => console.log(data));
   }
 
   createBug(bug: Bug) {
-    return this.http.post(this.endpoint, bug, this.httpOptions);
+    return this.http.post(this.endpoint, bug, this.httpOptions).subscribe(data => console.log(data));
   }
 }
