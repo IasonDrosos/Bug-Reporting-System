@@ -1,3 +1,12 @@
+input, select, textarea, button {
+  border-radius: 16px;
+}
+
+.rounded {
+  border-radius: 32px !important;
+  text-align: center !important;
+}
+
 #bugForm {
   border-radius: 32px;
 }
@@ -10,4 +19,48 @@
   background-color: #272727;
   /* Calculating the height of main component substracting the header and footer from the viewport */
   min-height: calc(100vh - 177px);
+}
+
+.hidden {
+  display: none;
+}
+
+.disabled {
+  pointer-events: none;
+  cursor: default;
+  text-decoration: none;
+  color: #8B9AA7;
+  background: #4F5861;
+  border: 0px;
+  border-radius: 16px;
+}
+
+.ng-invalid {
+  color: #fd7e14;
+}
+
+.ng-invalid:focus {
+  background-color: #fff !important;
+  border-color: #ffc107 !important;
+  outline: 0 !important;
+  box-shadow: 0 0 0 0.2rem #ffc107 !important;
+}
+
+.ng-valid:focus {
+  background-color: #fff !important;
+  border-color: #007bff !important;
+  outline: 0 !important;
+  box-shadow: 0 0 0 0.2rem #007bff !important;
+}
+.n_header{
+  font-size: 1.5em;
+  font-weight: 400 !important;
+}
+.n_titles{
+  font-size: 1.2em;
+  font-weight: 400 !important;
+}
+.n_info{
+  font-size: 1em;
+  font-weight: 400 !important;
 }
