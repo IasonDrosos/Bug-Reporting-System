@@ -1,4 +1,4 @@
-table {
+/* table {
   border-top-left-radius: 32px;
   border-top-right-radius: 32px;
 }
@@ -10,6 +10,7 @@ table {
 .border-top-none {
   border-top: none;
 }
+
 
 thead fa-icon {
   position: relative;
@@ -58,8 +59,12 @@ td {
 
 .table-head {
   font-size: 1.5rem;
+
 }
 
+thead tr th {
+  font-weight: 400 !important;
+}
 
 .table-head:hover {
   text-shadow: 0px 0px 3px #fff;
@@ -70,12 +75,21 @@ fa-icon {
   padding-left: 4px;
 }
 
-#addBugIcon fa-icon {
-  font-size: 2rem;
+fa-icon:hover {
+  cursor: pointer;
+}
+
+#addBugIcon fa-icon,
+#syncBugIcon fa-icon {
+  font-size: 2.2rem;
 }
 
 #addBugIcon fa-icon:nth-of-type(2) {
   color: #28a745;
+}
+
+#syncBugIcon fa-icon:nth-of-type(1) {
+  color: #0059ff
 }
 
 #editBugIcon fa-icon {
@@ -97,7 +111,63 @@ fa-icon {
 #edit-comment-icons fa-layers {
   vertical-align: middle !important;
 }
+ */
 
-@media only screen and (max-width: 600px) {
-  body {}
+/* New code */
+button{
+  border-radius: 32px;
+  width: 40px;
+  height: 40px;
+}
+
+img{
+  width: 39px;
+  height: 39px;
+  margin-top: -6px;
+  margin-left: -12px;
+}
+
+.bg-deepdark {
+  background-color: #272727;
+  /* Calculating the height of main component substracting the header and footer from the viewport */
+  min-height: calc(100vh - 177px);
+}
+
+.n_header{
+  font-size: 1.5em;
+  font-weight: 400 !important;
+}
+.n_header:hover {
+  text-shadow: 0px 0px 3px #fff;
+  cursor: pointer;
+}
+.n_date{
+  font-size: 1.5em;
+  font-weight: 400 !important;
+}
+.n_titles{
+  font-size: 1.2em;
+  font-weight: 400 !important;
+}
+.n_info{
+  font-size: 1.2em;
+  font-weight: 300;
+}
+.n_container{
+  border-radius: 32px;
+}
+.n_comment{
+  background-color: #272727;
+  border-radius: 16px;
+  border: 3px solid #454d55;
+  margin-left: -30px;
+  margin-right: -30px;
+  margin-top: -58px;
+  padding-top: 58px !important;
+  padding-bottom: 8px;
+  margin-bottom: -1px;
+}
+.n_row{
+  margin-left: 0px;
+  margin-right: 0px;
 }

@@ -2,10 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { Sorting } from 'src/app/models/sorting.model';
 import { PostmanService } from 'src/app/Services/postman.service';
 import { faLongArrowAltUp } from '@fortawesome/free-solid-svg-icons';
-import { faLongArrowAltDown, faCircle, faPlusCircle, faPencilAlt, faComment, faTimes, faCheck, faExclamation } from '@fortawesome/free-solid-svg-icons';
+import { faLongArrowAltDown, faCircle, faPlusCircle, faPencilAlt, faComment, faTimes, faCheck, faExclamation, faSyncAlt } from '@fortawesome/free-solid-svg-icons';
 import { Router } from '@angular/router';
-import { NgbAccordion } from '@ng-bootstrap/ng-bootstrap';
-import { empty, Subscriber } from 'rxjs';
+import { timeout } from 'q';
 
 
 @Component({
@@ -23,28 +22,53 @@ export class BugListComponent implements OnInit {
   faTimes = faTimes;
   faCheck = faCheck;
   faExclamation = faExclamation;
+  faSyncAlt = faSyncAlt;
 
   sortedBy: Sorting = { column: '', direction: '' };
   stateDirection = 0; // 0 none //1 asc // 2 desc
   stateColumn = '';
 
-  bugList;
+  syncTime = '5:00';
+  interval;
+
+
+  bugList = [];
   collapsedRow = [];
-  // expanded = false;
   constructor(private postmanService: PostmanService, private router: Router) { }
 
   ngOnInit() {
 
-    this.postmanService.getTheBugs().subscribe(data => {
+    this.postmanService.getTheBugs().subscribe((data: []) => {
       this.bugList = data;
+
+
+      this.bugList.map(bug => {
+        if (bug.title) {
+          bug.title = bug.title.toLowerCase().charAt(0).toUpperCase() + bug.title.slice(1);
+        }
+        if (bug.status) {
+          bug.status = bug.status.toLowerCase().charAt(0).toUpperCase() + bug.status.slice(1);
+        }
+        return bug;
+      });
+
       this.collapsedRow.length = this.bugList.length;
+      //  me to apo pano sigoureuoume oti to collapsedRow array 8a exei toses 8eseis oso kai to bugList pou erxetai
       this.collapsedRow.fill(true);
       console.log(data);
+
+
+      this.startTimer(300);
+
+
     });
 
   }
 
   sortTheBugs(column: string) {
+    clearInterval(this.interval);
+    this.startTimer(300);
+
     this.stateColumn = column;
 
     if (this.sortedBy.column === null || this.sortedBy.column !== column) {
@@ -61,9 +85,9 @@ export class BugListComponent implements OnInit {
       }
     }
 
-    this.postmanService.sortBy(this.sortedBy).subscribe(data => {
-    this.bugList = data;
-    this.collapsedRow.fill(true);
+    this.postmanService.sortBy(this.sortedBy).subscribe((data: []) => {
+      this.bugList = data;
+      this.collapsedRow.fill(true);
     });
 
   }
@@ -73,7 +97,7 @@ export class BugListComponent implements OnInit {
   }
 
   editBug(bugID) {
-    // this.router.navigate(['edit/' + bugID]);
+    clearInterval(this.interval);
     console.log(bugID);
     this.router.navigate(['edit', bugID]);
   }
@@ -81,5 +105,42 @@ export class BugListComponent implements OnInit {
   createBug() {
     this.router.navigate(['create']);
   }
+  syncBugs() {
+    clearInterval(this.interval);
+
+    this.startTimer(300);
+    this.postmanService.getTheBugs().subscribe((data: []) => { return this.bugList = data; });
+    this.stateDirection = 0;
+    this.stateColumn = '';
+    this.sortedBy = { column: '', direction: '' };
+
+
+  }
+
+  startTimer(counDownInSeconds: number) {
+
+    this.interval = setInterval(() => {
+      let minutes = Math.floor(counDownInSeconds / 60);
+      let seconds = counDownInSeconds % 60;
+
+      let sminutes = minutes < 10 ? '0' + minutes : minutes;
+      let sseconds = seconds < 10 ? '0' + seconds : seconds;
+
+
+      if (sminutes !== '0') {
+        this.syncTime = minutes + ':' + sseconds;
+      } else {
+        this.syncTime = minutes + ':' + sseconds + '0';
+      }
+      counDownInSeconds--;
+      if (counDownInSeconds === -1) {
+        clearInterval(this.interval);
+        this.syncBugs();
+      }
+
+    }, 1000);
+  }
+
 
 }
+

@@ -37,7 +37,20 @@ export class BugFormComponent implements OnInit {
       this.bugID = this.route.snapshot.params.id;
       this.postmanService.getBugById(this.bugID).subscribe(data => {
         this.bug = data;
-        this.bug.status = this.bug.status.toLowerCase();
+        if (!this.bug.status) {
+          this.bug.status = 'pending';
+        } else if (this.bug.status.toLowerCase() !== 'done' && this.bug.reporter.toLowerCase() !== 'rejected' && this.bug.reporter.toLowerCase() !== 'ready for test' && this.bug.reporter.toLowerCase() !== 'pending') {
+          this.bug.status = 'pending';
+        } else {
+          this.bug.status = this.bug.status.toLowerCase();
+        }
+        if (!this.bug.reporter) {
+          this.bug.reporter = '';
+        } else if (this.bug.reporter.toLowerCase() !== 'qa' && this.bug.reporter.toLowerCase() !== 'po' && this.bug.reporter.toLowerCase() !== 'dev') {
+          this.bug.reporter = '';
+        } else {
+          this.bug.reporter = this.bug.reporter.toLowerCase();
+        }
         console.log(this.bug);
       });
       console.log(this.bugID);
@@ -60,8 +73,6 @@ export class BugFormComponent implements OnInit {
       setTimeout(() => this.alert = false, 10000);
       console.log(this.bug);
       console.log(form.status);
-    } else {
-
     }
   }
 
