@@ -34,6 +34,15 @@ export class BugListComponent implements OnInit {
 
   bugList = [];
   collapsedRow = [];
+  filterState = false as boolean;
+
+  filter = {
+    title : '',
+    reporter : '',
+    priority : '',
+    status : '',
+  }
+
   constructor(private postmanService: PostmanService, private router: Router) { }
 
   ngOnInit() {
@@ -141,6 +150,9 @@ export class BugListComponent implements OnInit {
     }, 1000);
   }
 
+  filterShow() {
+    this.filterState = !this.filterState;
+  }
 
 }
 
