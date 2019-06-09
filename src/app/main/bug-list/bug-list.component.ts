@@ -13,6 +13,8 @@ import { timeout } from 'q';
   styleUrls: ['./bug-list.component.css']
 })
 export class BugListComponent implements OnInit {
+
+  page = 0;
   faLongArrowAltUp = faLongArrowAltUp;
   faLongArrowAltDown = faLongArrowAltDown;
   faCircle = faCircle;
@@ -34,13 +36,22 @@ export class BugListComponent implements OnInit {
 
   bugList = [];
   collapsedRow = [];
+  filterState = false as boolean;
+
+  filter = {
+    priority: '',
+    title: '',
+    status: '',
+    reporter: '',
+  }
+
   constructor(private postmanService: PostmanService, private router: Router) { }
 
   ngOnInit() {
 
-    this.postmanService.getTheBugs().subscribe((data: []) => {
-      this.bugList = data;
 
+    this.postmanService.getTheBugs(this.page).subscribe((data: []) => {
+      this.bugList = data;
 
       this.bugList.map(bug => {
         if (bug.title) {
@@ -55,22 +66,9 @@ export class BugListComponent implements OnInit {
       this.collapsedRow.length = this.bugList.length;
       //  me to apo pano sigoureuoume oti to collapsedRow array 8a exei toses 8eseis oso kai to bugList pou erxetai
       this.collapsedRow.fill(true);
-      // console.log(data);
-
 
       this.startTimer(300);
-
-
     });
-    // priority: string, tile: string, status: string, reporter: string
-    let cdsksdh = { priority: '1', tile: 'Bug 002', status: 'Ready for test', reporter: 'QA' }
-    this.postmanService.getBugsByFilter(cdsksdh).subscribe((data: []) => { this.bugList = data; console.log(data); });
-
-
-
-
-
-
 
   }
 
@@ -94,7 +92,7 @@ export class BugListComponent implements OnInit {
       }
     }
 
-    this.postmanService.sortBy(this.sortedBy).subscribe((data: []) => {
+    this.postmanService.sortBy(this.sortedBy, this.page).subscribe((data: []) => {
       this.bugList = data;
       this.collapsedRow.fill(true);
 
@@ -126,11 +124,11 @@ export class BugListComponent implements OnInit {
   createBug() {
     this.router.navigate(['create']);
   }
-  syncBugs() {
+  syncBugs() { //check
     clearInterval(this.interval);
 
     this.startTimer(300);
-    this.postmanService.getTheBugs().subscribe((data: []) => {
+    this.postmanService.getTheBugs(this.page).subscribe((data: []) => {
       this.bugList = data;
 
       this.bugList.map(bug => {
@@ -144,6 +142,7 @@ export class BugListComponent implements OnInit {
       });
 
     });
+    this.postmanService.getTheBugs(this.page).subscribe((data: []) => { return this.bugList = data; });
     this.stateDirection = 0;
     this.stateColumn = '';
     this.sortedBy = { column: '', direction: '' };
@@ -157,8 +156,8 @@ export class BugListComponent implements OnInit {
       const minutes = Math.floor(counDownInSeconds / 60);
       const seconds = counDownInSeconds % 60;
 
-      let sminutes = minutes < 10 ? '0' + minutes : minutes;
-      let sseconds = seconds < 10 ? '0' + seconds : seconds;
+      const sminutes = minutes < 10 ? '0' + minutes : minutes;
+      const sseconds = seconds < 10 ? '0' + seconds : seconds;
 
 
       if (sminutes !== '0') {
@@ -174,6 +173,36 @@ export class BugListComponent implements OnInit {
 
     }, 1000);
   }
+
+  filterShow() {
+    this.filterState = !this.filterState;
+  }
+  changePage(direction: string) {
+    if (direction === 'next') {
+      this.page++;
+      console.log('next');
+      console.log(this.page);
+    } else if (direction === 'previous') {
+      if (this.page !== 0) {
+        this.page--;
+        console.log('previous');
+        console.log(this.page);
+
+      }
+    }
+
+    this.postmanService.getTheBugs(this.page).subscribe((data: []) => {
+      this.bugList = data;
+    });
+
+  }
+  filteredSearch(searchParams: any) {
+    console.log(searchParams);
+
+    // let cdsksdh = { priority: '1', title: 'Bug', status: 'Ready for test', reporter: 'PO' }
+    this.postmanService.getBugsByFilter(searchParams).subscribe((data: []) => { this.bugList = data; console.log(data); });
+  }
+
 
 
 }

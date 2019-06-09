@@ -110,8 +110,8 @@ fa-icon:hover {
 
 #edit-comment-icons fa-layers {
   vertical-align: middle !important;
-}
- */
+} */
+
 
 /* New code */
 button{
@@ -160,8 +160,8 @@ img{
   background-color: #272727;
   border-radius: 16px;
   border: 3px solid #454d55;
-  margin-left: -30px;
-  margin-right: -30px;
+  margin-left: -24px;
+  margin-right: -24px;
   margin-top: -58px;
   padding-top: 58px !important;
   padding-bottom: 8px;
@@ -171,3 +171,28 @@ img{
   margin-left: 0px;
   margin-right: 0px;
 }
+.n_search{
+  border-radius: 32px;
+  width: 50px;
+  height: 50px;
+}
+.n_img{
+  width: 32px !important;
+  height: 32px !important;
+  margin-top: 1px !important;
+  margin-left: -4px !important;
+}
+.n_search_con{
+  background-color: #27535a;
+  border-radius: 32px;
+  border: 3px solid #17a2b8;
+  padding: 12px 0px;
+  margin-left: -24px;
+  margin-right: -24px;
+  margin-top: -24px;
+  margin-bottom: 16px;
+}
+.n_filter{
+  border-radius: 16px;
+}
+
