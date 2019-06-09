@@ -26,6 +26,11 @@ export class PostmanService {
     return this.http.get(this.endpoint + '/' + bugId);
   }
 
+  getBugsByFilter(filterParams: { priority: string, tile: string, status: string, reporter: string }) {
+    this.endpoint = this.endpoint + `?priority=${filterParams.priority}&title=${filterParams.tile}&status=${filterParams.status}&reporter=${filterParams.reporter}`;
+    return this.http.get(this.endpoint);
+  }
+
   sortBy(sortedBy: Sorting) {
     return this.http.get(this.endpoint + '?sort=' + sortedBy.column + ',' + sortedBy.direction);
   }
