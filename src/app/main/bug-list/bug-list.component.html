@@ -293,6 +293,9 @@
     </div>
   </div>
 </div>
-<div class="container d-flex no-select">
-  <p class="small text-white ml-auto pr-4">Table autosynch: {{syncTime}}</p>
+<div class="container d-flex px-5 mx-5 no-select">
+  <p class="small text-white ml-auto">Table autosynch: {{syncTime}}</p>
+  <div class="display-4 text-light text-center mx-5" (click)="changePage('previous')"><b>&lt;</b></div> <div class="display-4 text-light text-center mx-5" (click)="changePage('next')"><b>&gt;</b></div>
 </div>
+
+

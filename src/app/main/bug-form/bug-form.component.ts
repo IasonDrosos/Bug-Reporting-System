@@ -3,6 +3,7 @@ import { PostmanService } from 'src/app/Services/postman.service';
 import { NgForm } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 
+
 @Component({
   selector: 'app-bug-form',
   templateUrl: './bug-form.component.html',

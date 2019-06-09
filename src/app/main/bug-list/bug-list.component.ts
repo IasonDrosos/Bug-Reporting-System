@@ -13,6 +13,8 @@ import { timeout } from 'q';
   styleUrls: ['./bug-list.component.css']
 })
 export class BugListComponent implements OnInit {
+
+  page = 0;
   faLongArrowAltUp = faLongArrowAltUp;
   faLongArrowAltDown = faLongArrowAltDown;
   faCircle = faCircle;
@@ -47,7 +49,8 @@ export class BugListComponent implements OnInit {
 
   ngOnInit() {
 
-    this.postmanService.getTheBugs().subscribe((data: []) => {
+
+    this.postmanService.getTheBugs(this.page).subscribe((data: []) => {
       this.bugList = data;
 
 
@@ -94,7 +97,7 @@ export class BugListComponent implements OnInit {
       }
     }
 
-    this.postmanService.sortBy(this.sortedBy).subscribe((data: []) => {
+    this.postmanService.sortBy(this.sortedBy, this.page).subscribe((data: []) => {
       this.bugList = data;
       this.collapsedRow.fill(true);
     });
@@ -118,7 +121,7 @@ export class BugListComponent implements OnInit {
     clearInterval(this.interval);
 
     this.startTimer(300);
-    this.postmanService.getTheBugs().subscribe((data: []) => { return this.bugList = data; });
+    this.postmanService.getTheBugs(this.page).subscribe((data: []) => { return this.bugList = data; });
     this.stateDirection = 0;
     this.stateColumn = '';
     this.sortedBy = { column: '', direction: '' };
@@ -153,6 +156,29 @@ export class BugListComponent implements OnInit {
   filterShow() {
     this.filterState = !this.filterState;
   }
+  changePage(direction: string) {
+    if (direction == "next") {
+
+      this.page++;
+      console.log('next');
+      console.log(this.page);
+
+
+
+    } else if (direction == 'previous') {
+      if (this.page != 0) {
+        this.page--;
+        console.log('previous');
+        console.log(this.page);
+
+      }
+    }
+
+    this.postmanService.getTheBugs(this.page).subscribe((data: []) => {
+      this.bugList = data;});
+
+  }
+
 
 }
 
