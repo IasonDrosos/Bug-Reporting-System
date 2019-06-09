@@ -153,17 +153,17 @@ export class BugListComponent implements OnInit {
 
 
 
-    } else if (direction == 'previous') {
-      if (this.page != 0) {
+    } else if (direction === 'previous') {
+      if (this.page !== 0) {
         this.page--;
         console.log('previous');
         console.log(this.page);
 
       }
     }
-
     this.postmanService.getTheBugs(this.page).subscribe((data: []) => {
-      this.bugList = data;});
+      if (data.length !== 0) { this.bugList = data; }
+    });
 
   }
 
