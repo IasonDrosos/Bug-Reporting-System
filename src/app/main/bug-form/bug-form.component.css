@@ -64,3 +64,9 @@ input, select, textarea, button {
   font-size: 1em;
   font-weight: 400 !important;
 }
+.alert-box{
+  margin-top: -88px !important;
+  margin-bottom: 88px !important;
+  margin-left: 32px;
+  margin-right: 32px;
+}

@@ -19,15 +19,22 @@ export class PostmanService {
   constructor(private http: HttpClient) { }
 
   getTheBugs(page: number) {
-    return this.http.get(this.endpoint+'?page='+page);
+    return this.http.get(this.endpoint + '?page=' + page);
   }
 
   getBugById(bugId) {
     return this.http.get(this.endpoint + '/' + bugId);
   }
 
-  sortBy(sortedBy: Sorting, page:number) {
-    return this.http.get(this.endpoint + '?sort=' + sortedBy.column + ',' + sortedBy.direction+'&page='+page);
+  getBugsByFilter(filterParams: { priority: string, title: string, status: string, reporter: string }) {
+
+
+    console.log(this.endpoint);
+    return this.http.get(this.endpoint + `?priority=${filterParams.priority}&title=${filterParams.title}&status=${filterParams.status}&reporter=${filterParams.reporter}`);
+  }
+
+  sortBy(sortedBy: Sorting, page: number) {
+    return this.http.get(this.endpoint + '?sort=' + sortedBy.column + ',' + sortedBy.direction + '&page=' + page);
   }
 
   editBug(bug: Bug) {

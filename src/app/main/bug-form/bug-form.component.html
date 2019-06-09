@@ -1,14 +1,13 @@
 <div *ngIf="bug">
 <div class="bg-deepdark p-5">
-  <div class="container no-select">
+  <div class="container n_container no-select">
     <!-- Title -->
     <h1 class="display-4 text-light text-center no-select" [ngClass]="{hidden : bugID}">Add a Bug</h1>
     <h1 class="display-4 text-light text-center" [ngClass]="{hidden : !bugID}">Edit Bug</h1>
     <!-- Close Button -->
     <button class="btn btn-danger shadow float-right px-5 mx-5 my-4" (click)="bugList()">Close</button>
     <!-- Form -->
-    <form class="bg-dark shadow p-5" id="bugForm" #bugForm="ngForm" (ngSubmit)="Print(bugForm)" autocomplete="off"
-      ngNativeValidate>
+    <form class="bg-dark shadow p-5" id="bugForm" #bugForm="ngForm" (ngSubmit)="Print(bugForm)" autocomplete="off" ngNativeValidate>
       <div class="form-group">
         <h2 class="text-light pb-3 mb-3" id="formTitle">Bug Info</h2>
         <div class="row ">
@@ -141,14 +140,14 @@
     </form>
     <!-- Alert Create -->
     <div [ngClass]="{hidden : bugID}" *ngIf="bugForm.submitted && alert.valueOf(true)"
-      class="alert alert-success success-dismissible fade show rounded" role="success">
+      class="alert alert-success alert-box success-dismissible fade show rounded" role="success">
       <span class="h4"><strong>"{{bug.title}}"</strong> has been reported successfully. Yeah!</span>
       <img src="../../assets/check-solid.svg" width="30" height="30" class="align-top ml-5" alt="">
       <small class="d-block">You will be redirected to the Reported Bugs page in 10s</small>
     </div>
     <!-- Alert Edit -->
     <div [ngClass]="{hidden : !bugID}" *ngIf="bugForm.submitted && alert.valueOf(true)"
-      class="alert alert-success success-dismissible fade show rounded" role="success">
+      class="alert alert-success alert-box success-dismissible fade show rounded" role="success">
       <span class="h4"><strong>"{{bug.title}}"</strong> was saved successfully. Woo Hoo!</span>
       <img src="../../assets/check-solid.svg" width="30" height="30" class="d-inline-block align-top ml-5" alt="">
     </div>

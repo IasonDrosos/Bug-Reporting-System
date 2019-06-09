@@ -10,3 +10,6 @@
   -ms-user-select: none;
   user-select: none;
 }
+.n_container{
+  min-width: 992px !important;
+}
