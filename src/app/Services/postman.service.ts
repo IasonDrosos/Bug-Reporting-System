@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Sorting } from '../models/sorting.model';
 import { Bug } from '../models/bug.model';
+import { Filter } from '../models/filter.model';
 
 @Injectable({
   providedIn: 'root'
@@ -18,23 +19,21 @@ export class PostmanService {
   endpoint = 'https://bug-report-system-server.herokuapp.com/bugs';
   constructor(private http: HttpClient) { }
 
-  getTheBugs(page: number) {
-    return this.http.get(this.endpoint + '?page=' + page);
+  getTheBugs() {
+    return this.http.get(this.endpoint);
   }
 
   getBugById(bugId) {
     return this.http.get(this.endpoint + '/' + bugId);
   }
 
-  getBugsByFilter(filterParams: { priority: string, title: string, status: string, reporter: string }) {
-
-
-    console.log(this.endpoint);
-    return this.http.get(this.endpoint + `?priority=${filterParams.priority}&title=${filterParams.title}&status=${filterParams.status}&reporter=${filterParams.reporter}`);
-  }
-
-  sortBy(sortedBy: Sorting, page: number) {
-    return this.http.get(this.endpoint + '?sort=' + sortedBy.column + ',' + sortedBy.direction + '&page=' + page);
+  getBugsByFilter(filterParams: Filter ) {
+    let sort =``;
+    if(filterParams.sort.column)
+    {
+      sort = `&sort=${filterParams.sort.column},${filterParams.sort.direction}`;
+    }
+    return this.http.get(this.endpoint + `?priority=${filterParams.priority}&title=${filterParams.title}&status=${filterParams.status}&reporter=${filterParams.reporter}&page=${filterParams.page}${sort}`);
   }
 
   editBug(bug: Bug) {
