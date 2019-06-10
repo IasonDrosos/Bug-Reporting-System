@@ -122,6 +122,7 @@ export class BugListComponent implements OnInit {
   }
 
   createBug() {
+    clearInterval(this.interval);
     this.router.navigate(['create']);
   }
   syncBugs() { //check
