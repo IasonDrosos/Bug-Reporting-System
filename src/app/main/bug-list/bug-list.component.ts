@@ -5,6 +5,7 @@ import { faLongArrowAltUp } from '@fortawesome/free-solid-svg-icons';
 import { faLongArrowAltDown, faCircle, faPlusCircle, faPencilAlt, faComment, faTimes, faCheck, faExclamation, faSyncAlt } from '@fortawesome/free-solid-svg-icons';
 import { Router } from '@angular/router';
 import { timeout } from 'q';
+import { Filter } from 'src/app/models/filter.model';
 
 
 @Component({
@@ -32,27 +33,29 @@ export class BugListComponent implements OnInit {
 
   syncTime = '5:00';
   interval;
-  bugList = [];
+  bugList;
+  maxPages;
   collapsedRow = [];
   filterState = false;
 
-  filter = {
+  filter: Filter = {
     priority: '',
     title: '',
     status: '',
     reporter: '',
     page: 0,
     sort: { column: '', direction: '' }
-  }
+  };
 
   constructor(private postmanService: PostmanService, private router: Router) { }
 
   ngOnInit() {
 
-
-    this.postmanService.getTheBugs().subscribe((data: []) => {
-      this.bugList = data;
-
+    // this.showConfigResponse();
+    this.postmanService.getTheBugs().subscribe((data) => {
+      this.bugList = data.body;
+      this.maxPages = data.headers.get('totalpages');
+      console.log(this.maxPages);
       this.bugList.map(bug => {
         if (bug.title) {
           bug.title = bug.title.toLowerCase().charAt(0).toUpperCase() + bug.title.slice(1);
@@ -93,8 +96,9 @@ export class BugListComponent implements OnInit {
       }
     }
 
-    this.postmanService.getBugsByFilter(this.filter).subscribe((data: []) => {
-      this.bugList = data;
+    this.postmanService.getBugsByFilter(this.filter).subscribe((data) => {
+      this.bugList = data.body;
+      this.maxPages = data.headers.get('totalpages');
       this.collapsedRow.fill(true);
 
 
@@ -130,8 +134,9 @@ export class BugListComponent implements OnInit {
     clearInterval(this.interval);
 
     this.startTimer(300);
-    this.postmanService.getTheBugs().subscribe((data: []) => {
-      this.bugList = data;
+    this.postmanService.getTheBugs().subscribe((data) => {
+      this.bugList = data.body;
+      this.maxPages = data.headers.get('totalpages');
 
       this.bugList.map(bug => {
         if (bug.title) {
@@ -144,7 +149,7 @@ export class BugListComponent implements OnInit {
       });
 
     });
-    this.postmanService.getTheBugs().subscribe((data: []) => { return this.bugList = data; });
+    this.postmanService.getTheBugs().subscribe((data) => { this.bugList = data.body; this.maxPages = data.headers.get('totalpages'); });
     this.stateDirection = 0;
     this.stateColumn = '';
     this.filter.sort = { column: '', direction: '' };
@@ -183,9 +188,12 @@ export class BugListComponent implements OnInit {
 
   changePage(direction: string) {
     if (direction === 'next') {
-      this.filter.page++;
-      console.log('next');
-      console.log(this.filter.page);
+      if (this.filter.page < this.maxPages - 1) {
+        this.filter.page++;
+        console.log('next');
+        console.log(this.filter.page);
+      }
+
     } else if (direction === 'previous') {
       if (this.filter.page !== 0) {
         this.filter.page--;
@@ -194,14 +202,11 @@ export class BugListComponent implements OnInit {
 
       }
     }
-    this.postmanService.getBugsByFilter(this.filter).subscribe((data: []) => { this.bugList = data; console.log(data); });
-
+    this.filteredSearch();
   }
   filteredSearch() {
-    this.postmanService.getBugsByFilter(this.filter).subscribe((data: []) => { this.bugList = data; console.log(data); });
+    this.postmanService.getBugsByFilter(this.filter).subscribe((data) => {
+       this.bugList = data.body; this.maxPages = data.headers.get('totalpages'); });
   }
-
-
-
 }
 
