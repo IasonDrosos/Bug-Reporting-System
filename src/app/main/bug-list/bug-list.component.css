@@ -186,13 +186,16 @@ img{
   background-color: #27535a;
   border-radius: 32px;
   border: 3px solid #17a2b8;
-  padding: 12px 0px;
-  margin-left: -24px;
-  margin-right: -24px;
-  margin-top: -24px;
-  margin-bottom: 16px;
+  margin-left: 50px;
+  margin-right: 50px;
+  margin-top: -50px;
 }
 .n_filter{
-  border-radius: 16px;
+  border-radius: 32px;
+}
+.n_button{
+  width: -webkit-fill-available;
+  height: auto;
+  font-size: 1.2em;
 }
 

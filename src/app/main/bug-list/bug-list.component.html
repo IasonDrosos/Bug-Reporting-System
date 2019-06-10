@@ -143,21 +143,25 @@
 <div class="container n_container no-select">
   <div class="d-flex justify-content-center">
     <h1 class="display-4 text-light text-center mx-5 d-inline" [ngClass]="{hidden : bugID}">Reported Bugs</h1>
-    <button class="btn btn-info shadow n_search my-auto d-inline" (click)="filterShow()">
+    <!-- <button class="btn btn-info shadow n_search my-auto d-inline" (click)="filterShow()">
       <img src="../../assets/search-solid.svg" class="d-inline align-center n_img" alt="">
-    </button>
+    </button> -->
   </div>
   <div class="bg-dark px-4 pt-4 pb-3 text-light text-center n_container">
     <!-- Filter Collapse -->
-          <div [ngbCollapse]="!filterState" class="n_search_con shadow">
-            <div class="row">
-              <div class="col-3">
-                  <input type="text" class="form-control n_info n_filter mx-3" #filterTitle="ngModel" name="filterTitle" [(ngModel)]="filter.title"
-                  id="filterTitle" placeholder="Title" minlength="3">
+    <div class="row px-3 d-flex">
+        <button class="btn btn-info shadow n_search my-auto d-inline" (click)="filterShow()">
+            <img src="../../assets/search-solid.svg" class="d-inline align-center n_img" alt="">
+        </button>
+        <div [ngbCollapse]="!filterState" class="n_search_con shadow">
+            <div class="row d-flex justify-content-between">
+              <div class="col">
+                <input type="text" class="form-control n_info n_filter" #filterTitle="ngModel" name="filterTitle"
+                  [(ngModel)]="filter.title" id="filterTitle" placeholder="Title" minlength="3">
               </div>
               <div class="col">
-                <select class="custom-select n_info n_filter" #filterStatus="ngModel" name="filterStatus" [(ngModel)]="filter.status"
-                  id="filterStatus">
+                <select class="custom-select n_info n_filter" #filterStatus="ngModel" name="filterStatus"
+                  [(ngModel)]="filter.status" id="filterStatus">
                   <option selected hidden value="">Status</option>
                   <option value="pending">Pending</option>
                   <option value="ready for test">Ready for Test</option>
@@ -166,27 +170,31 @@
                 </select>
               </div>
               <div class="col">
-                <select class="custom-select n_info n_filter" #filterPriority="ngModel" name="filterPriority" [(ngModel)]="filter.priority"
-                  id="filterPriority">
+                <select class="custom-select n_info n_filter" #filterPriority="ngModel" name="filterPriority"
+                  [(ngModel)]="filter.priority" id="filterPriority">
                   <option selected hidden value="">Priority</option>
                   <option value="1">Minor</option>
                   <option value="2">Major</option>
                   <option value="3">Critical</option>
                 </select>
               </div>
-              <div class="col-2">
-                <select class="custom-select n_info n_filter mx-3" #filterReporter="ngModel" name="filterReporter" [(ngModel)]="filter.reporter"
-                id="filterReporter">
-                <option selected hidden value="">Reporter</option>
-                <option value="qa">QA</option>
-                <option value="po">PO</option>
-                <option value="dev">DEV</option>
-              </select>
-            </div>
-              <div class="col-2"></div>
+              <div class="col">
+                <select class="custom-select n_info n_filter" #filterReporter="ngModel" name="filterReporter"
+                  [(ngModel)]="filter.reporter" id="filterReporter">
+                  <option selected hidden value="">Reporter</option>
+                  <option value="qa">QA</option>
+                  <option value="po">PO</option>
+                  <option value="dev">DEV</option>
+                </select>
+              </div>
               <div class="col"></div>
+              <div class="col">
+                <button type="submit" class="btn btn-light shadow n_button px-4">Submit</button>
+              </div>
             </div>
           </div>
+    </div>
+
 
     <!-- List Header -->
     <div class="row pb-3" style="border-bottom: 1px solid #454d55">
@@ -292,10 +300,26 @@
       </div>
     </div>
   </div>
+  <nav>
+    <ul class="pagination justify-content-center">
+      <li class="page-item">
+        <a class="page-link"
+          style="background-color: #343a40; color: #f8f9fa; border: 0px; border-radius: 0px 0px 0px 16px !important;">
+          <span>&laquo;</span>
+        </a>
+      </li>
+      <li class="page-item"><a class="page-link" style="background-color: #343a40; color: #f8f9fa; border: 0px;">Θα
+          δημιουργούνατι με ngFor</a></li>
+      <li class="page-item">
+        <a class="page-link"
+          style="background-color: #343a40; color: #f8f9fa; border: 0px; border-radius: 0px 0px 16px 0px !important;">
+          <span>&raquo;</span>
+        </a>
+      </li>
+    </ul>
+  </nav>
 </div>
-<div class="container d-flex px-5 mx-5 no-select">
-  <p class="small text-white ml-auto">Table autosynch: {{syncTime}}</p>
-  <div class="display-4 text-light text-center mx-5" (click)="changePage('previous')"><b>&lt;</b></div> <div class="display-4 text-light text-center mx-5" (click)="changePage('next')"><b>&gt;</b></div>
+<div class="container d-flex justify-content-center px-5 no-select">
+  <p class="small text-white">Table autosynch: {{syncTime}}</p>
+  <!-- <div class="display-4 text-light text-center mx-5" (click)="changePage('previous')"><b>&lt;</b></div> <div class="display-4 text-light text-center mx-5" (click)="changePage('next')"><b>&gt;</b></div> -->
 </div>
-
-

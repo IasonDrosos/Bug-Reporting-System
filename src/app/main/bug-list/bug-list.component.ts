@@ -80,6 +80,7 @@ export class BugListComponent implements OnInit {
   sortTheBugs(column: string) {
     clearInterval(this.interval);
     this.startTimer(300);
+    this.page = 0;
 
     this.stateColumn = column;
 
