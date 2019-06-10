@@ -14,7 +14,7 @@ import { timeout } from 'q';
 })
 export class BugListComponent implements OnInit {
 
-  page = 0;
+
   faLongArrowAltUp = faLongArrowAltUp;
   faLongArrowAltDown = faLongArrowAltDown;
   faCircle = faCircle;
@@ -26,23 +26,23 @@ export class BugListComponent implements OnInit {
   faExclamation = faExclamation;
   faSyncAlt = faSyncAlt;
 
-  sortedBy: Sorting = { column: '', direction: '' };
+
   stateDirection = 0; // 0 none //1 asc // 2 desc
   stateColumn = '';
 
   syncTime = '5:00';
   interval;
-
-
   bugList = [];
   collapsedRow = [];
-  filterState = false as boolean;
+  filterState = false;
 
   filter = {
     priority: '',
     title: '',
     status: '',
     reporter: '',
+    page: 0,
+    sort: { column: '', direction: '' }
   }
 
   constructor(private postmanService: PostmanService, private router: Router) { }
@@ -50,7 +50,7 @@ export class BugListComponent implements OnInit {
   ngOnInit() {
 
 
-    this.postmanService.getTheBugs(this.page).subscribe((data: []) => {
+    this.postmanService.getTheBugs().subscribe((data: []) => {
       this.bugList = data;
 
       this.bugList.map(bug => {
@@ -76,23 +76,24 @@ export class BugListComponent implements OnInit {
     clearInterval(this.interval);
     this.startTimer(300);
 
+    this.filter.page = 0;
     this.stateColumn = column;
 
-    if (this.sortedBy.column === null || this.sortedBy.column !== column) {
-      this.sortedBy.column = column;
-      this.sortedBy.direction = 'asc';
+    if (this.filter.sort.column === null || this.filter.sort.column !== column) {
+      this.filter.sort.column = column;
+      this.filter.sort.direction = 'asc';
       this.stateDirection = 1;
     } else {
-      if (this.sortedBy.direction === 'asc') {
-        this.sortedBy.direction = 'desc';
+      if (this.filter.sort.direction === 'asc') {
+        this.filter.sort.direction = 'desc';
         this.stateDirection = 2;
       } else {
-        this.sortedBy.direction = 'asc';
+        this.filter.sort.direction = 'asc';
         this.stateDirection = 1;
       }
     }
 
-    this.postmanService.sortBy(this.sortedBy, this.page).subscribe((data: []) => {
+    this.postmanService.getBugsByFilter(this.filter).subscribe((data: []) => {
       this.bugList = data;
       this.collapsedRow.fill(true);
 
@@ -124,12 +125,13 @@ export class BugListComponent implements OnInit {
   createBug() {
     clearInterval(this.interval);
     this.router.navigate(['create']);
+
   }
   syncBugs() { //check
     clearInterval(this.interval);
 
     this.startTimer(300);
-    this.postmanService.getTheBugs(this.page).subscribe((data: []) => {
+    this.postmanService.getTheBugs().subscribe((data: []) => {
       this.bugList = data;
 
       this.bugList.map(bug => {
@@ -143,10 +145,10 @@ export class BugListComponent implements OnInit {
       });
 
     });
-    this.postmanService.getTheBugs(this.page).subscribe((data: []) => { return this.bugList = data; });
+    this.postmanService.getTheBugs().subscribe((data: []) => { return this.bugList = data; });
     this.stateDirection = 0;
     this.stateColumn = '';
-    this.sortedBy = { column: '', direction: '' };
+    this.filter.sort = { column: '', direction: '' };
 
 
   }
@@ -178,29 +180,26 @@ export class BugListComponent implements OnInit {
   filterShow() {
     this.filterState = !this.filterState;
   }
+
+
   changePage(direction: string) {
     if (direction === 'next') {
-      this.page++;
+      this.filter.page++;
       console.log('next');
-      console.log(this.page);
+      console.log(this.filter.page);
     } else if (direction === 'previous') {
-      if (this.page !== 0) {
-        this.page--;
+      if (this.filter.page !== 0) {
+        this.filter.page--;
         console.log('previous');
-        console.log(this.page);
+        console.log(this.filter.page);
 
       }
     }
-    this.postmanService.getTheBugs(this.page).subscribe((data: []) => {
-      if (data.length !== 0) { this.bugList = data; }
-    });
+    this.postmanService.getBugsByFilter(this.filter).subscribe((data: []) => { this.bugList = data; console.log(data); });
 
   }
-  filteredSearch(searchParams: any) {
-    console.log(searchParams);
-
-    // let cdsksdh = { priority: '1', title: '', status: 'Ready for test', reporter: '' }
-    this.postmanService.getBugsByFilter(searchParams).subscribe((data: []) => { this.bugList = data; console.log(data); });
+  filteredSearch() {
+    this.postmanService.getBugsByFilter(this.filter).subscribe((data: []) => { this.bugList = data; console.log(data); });
   }
 
 
