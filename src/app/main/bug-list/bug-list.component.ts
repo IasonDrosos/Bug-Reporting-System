@@ -3,6 +3,7 @@ import { PostmanService } from 'src/app/Services/postman.service';
 import { faLongArrowAltUp } from '@fortawesome/free-solid-svg-icons';
 import { faLongArrowAltDown, faTimes, faCheck, faExclamation } from '@fortawesome/free-solid-svg-icons';
 import { Router } from '@angular/router';
+import { filterQueryId } from '@angular/core/src/view/util';
 
 @Component({
   selector: 'app-bug-list',
@@ -18,16 +19,17 @@ export class BugListComponent implements OnInit, OnDestroy {
   faExclamation = faExclamation;
 
 
-
+// Θα τα κρατήσουμε και εδώ και στο object Filter????
   stateDirection = 0; // 0 none //1 asc // 2 desc
   stateColumn = '';
 
   syncTime = '5:00';
-  interval;
+  interval; //id της setinterval class
   bugList = [];
   collapsedRow = []; // used for comments dropdown status
-  filterState = false;
 
+//Filter parameters
+  filterState = false;
   filter = {
     priority: '',
     title: '',
@@ -182,7 +184,13 @@ export class BugListComponent implements OnInit, OnDestroy {
     this.collapsedRow.fill(true);
   }
 
-
+ clearFilter(){
+  this.filter.priority = '';
+  this.filter.status = '';
+  this.filter.reporter = '';
+  this.filter.title = '';
+  this.syncBugs();
+ }
 
 }
 
