@@ -3,7 +3,7 @@ import { PostmanService } from 'src/app/Services/postman.service';
 import { faLongArrowAltUp } from '@fortawesome/free-solid-svg-icons';
 import { faLongArrowAltDown, faTimes, faCheck, faExclamation } from '@fortawesome/free-solid-svg-icons';
 import { Router } from '@angular/router';
-import { filterQueryId } from '@angular/core/src/view/util';
+import { Filter } from 'src/app/models/filter.model';
 
 @Component({
   selector: 'app-bug-list',
@@ -24,13 +24,13 @@ export class BugListComponent implements OnInit, OnDestroy {
   stateColumn = '';
 
   syncTime = '5:00';
-  interval; //id της setinterval class
-  bugList = [];
-  collapsedRow = []; // used for comments dropdown status
-
-//Filter parameters
+  interval;
+  bugList;
+  maxPages;
+  collapsedRow = [];
   filterState = false;
-  filter = {
+
+  filter: Filter = {
     priority: '',
     title: '',
     status: '',
@@ -42,9 +42,9 @@ export class BugListComponent implements OnInit, OnDestroy {
   constructor(private postmanService: PostmanService, private router: Router) { }
 
   ngOnInit() {
-    this.postmanService.getTheBugs().subscribe((data: []) => {
+    this.postmanService.getTheBugs().subscribe((data) => {
       this.startTimer(300);
-      this.bugList = this.capitalizeData(data);
+      this.bugList = this.capitalizeData(data.body);
       this.commentsCollapseSystem(this.bugList.length);
     });
   }
@@ -74,8 +74,8 @@ export class BugListComponent implements OnInit, OnDestroy {
       }
     }
 
-    this.postmanService.getBugsByFilter(this.filter).subscribe((data: []) => {
-      this.bugList = this.capitalizeData(data);
+    this.postmanService.getBugsByFilter(this.filter).subscribe((data) => {
+      this.bugList = this.capitalizeData(data.body);
       this.commentsCollapseSystem(this.bugList.length);
     });
 
@@ -97,11 +97,11 @@ export class BugListComponent implements OnInit, OnDestroy {
     clearInterval(this.interval);
     this.startTimer(300);
 
-    this.postmanService.getTheBugs().subscribe((data: []) => {
-      this.bugList = this.capitalizeData(data);
+    this.postmanService.getTheBugs().subscribe((data) => {
+      this.maxPages = data.headers.get('totalpages');
+      this.bugList = this.capitalizeData(data.body);
       this.commentsCollapseSystem(this.bugList.length);
     });
-
     this.stateDirection = 0;
     this.stateColumn = '';
     this.filter.sort = { column: '', direction: '' };
@@ -134,9 +134,12 @@ export class BugListComponent implements OnInit, OnDestroy {
 
   changePage(direction: string) {
     if (direction === 'next') {
-      this.filter.page++;
-      console.log('next');
-      console.log(this.filter.page);
+      if (this.filter.page < this.maxPages - 1) {
+        this.filter.page++;
+        console.log('next');
+        console.log(this.filter.page);
+      }
+
     } else if (direction === 'previous') {
       if (this.filter.page !== 0) {
         this.filter.page--;
@@ -145,18 +148,22 @@ export class BugListComponent implements OnInit, OnDestroy {
 
       }
     }
-    this.postmanService.getBugsByFilter(this.filter).subscribe((data: []) => {
-      this.bugList = data;
-      this.commentsCollapseSystem(this.bugList.length);
-      console.log(data);
-    });
+    // this.postmanService.getBugsByFilter(this.filter).subscribe((data: []) => {
+    //   this.bugList = this.capitalizeData(data);
+    //   this.commentsCollapseSystem(this.bugList.length);
+    //   console.log(data);
+    // });
+    this.filteredSearch();
   }
 
   filteredSearch() {
-    this.postmanService.getBugsByFilter(this.filter).subscribe((data: []) => {
+    this.postmanService.getBugsByFilter(this.filter).subscribe((data) => {
+      this.maxPages = data.headers.get('totalpages');
       clearInterval(this.interval);
       this.startTimer(300);
-      this.bugList = data;
+      console.log(data);
+
+      this.bugList = this.capitalizeData(data.body);
       this.commentsCollapseSystem(this.bugList.length);
     });
   }
@@ -169,9 +176,6 @@ export class BugListComponent implements OnInit, OnDestroy {
       }
       if (bug.status) {
         bug.status = bug.status.toLowerCase().charAt(0).toUpperCase() + bug.status.slice(1);
-      }
-      if (bug.reporter) {
-        bug.reporter = bug.reporter.toLowerCase().toUpperCase();
       }
       return bug;
     });
