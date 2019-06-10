@@ -143,18 +143,21 @@ export class BugListComponent implements OnInit, OnDestroy {
 
       }
     }
-    this.postmanService.getBugsByFilter(this.filter).subscribe((data: []) => {
-      this.bugList = data;
-      this.commentsCollapseSystem(this.bugList.length);
-      console.log(data);
-    });
+    // this.postmanService.getBugsByFilter(this.filter).subscribe((data: []) => {
+    //   this.bugList = this.capitalizeData(data);
+    //   this.commentsCollapseSystem(this.bugList.length);
+    //   console.log(data);
+    // });
+    this.filteredSearch();
   }
 
   filteredSearch() {
     this.postmanService.getBugsByFilter(this.filter).subscribe((data: []) => {
       clearInterval(this.interval);
       this.startTimer(300);
-      this.bugList = data;
+      console.log(data);
+
+      this.bugList = this.capitalizeData(data);
       this.commentsCollapseSystem(this.bugList.length);
     });
   }
@@ -167,9 +170,6 @@ export class BugListComponent implements OnInit, OnDestroy {
       }
       if (bug.status) {
         bug.status = bug.status.toLowerCase().charAt(0).toUpperCase() + bug.status.slice(1);
-      }
-      if (bug.reporter) {
-        bug.reporter = bug.reporter.toLowerCase().toUpperCase();
       }
       return bug;
     });

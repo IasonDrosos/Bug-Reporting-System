@@ -15,7 +15,7 @@
         <div class="col">
           <select class="custom-select n_info n_filter" #filterStatus="ngModel" name="filterStatus" [(ngModel)]="filter.status" id="filterStatus">
             <option selected hidden value="">Status</option>
-            <option value="Pending">Pending</option>
+            <option value="pending">Pending</option>
             <option value="Ready for test">Ready for Test</option>
             <option value="Done">Done</option>
             <option value="Rejected">Rejected</option>
@@ -32,9 +32,9 @@
         <div class="col-2">
           <select class="custom-select n_info n_filter mx-3" #filterReporter="ngModel" name="filterReporter" [(ngModel)]="filter.reporter" id="filterReporter">
             <option selected hidden value="">Reporter</option>
-            <option value="qa">QA</option>
-            <option value="po">PO</option>
-            <option value="dev">DEV</option>
+            <option value="QA">QA</option>
+            <option value="PO">PO</option>
+            <option value="DEV">DEV</option>
           </select>
         </div>
         <div class="col-2">
@@ -85,7 +85,7 @@
             <span *ngIf="bug.status ==='Done'"><fa-icon [icon]="faCheck" title="Done"></fa-icon></span>
             <span *ngIf="bug.status ==='Rejected'"><fa-icon [icon]="faTimes" title="Rejected"></fa-icon></span>
             <span *ngIf="bug.status ==='Ready for test'"><fa-icon [icon]="faExclamation" title="Ready for test"></fa-icon></span>
-            <span *ngIf="bug.status ==='Pending'"> Pending... </span>
+            <span *ngIf="bug.status ==='Pending'"> Pending</span>
             <span *ngIf="bug.status !=='Done' && bug.status !=='Rejected' && bug.status !=='Ready for test' && bug.status !=='Pending'">Not Valid </span>
           </div>
           <div class="col n_info">
