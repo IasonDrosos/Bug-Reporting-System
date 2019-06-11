@@ -23,7 +23,7 @@ export class BugListComponent implements OnInit, OnDestroy {
   stateColumn = '';
 
   syncTime = '5:00';
-  interval;
+  interval; // ID of setInterval (used for stopping it)
   bugList = [];
   collapsedRow = []; // used for comments dropdown status
   filterState = false;
