@@ -90,6 +90,11 @@ export class BugListComponent implements OnInit, OnDestroy {
     this.router.navigate(['edit', bugID]);
   }
 
+  delBug(id){
+    this.postmanService.delBug(id);
+    this.syncBugs();
+  }
+
   createBug() {
     this.router.navigate(['create']);
   }

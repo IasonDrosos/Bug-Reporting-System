@@ -51,4 +51,8 @@ export class PostmanService {
       this.endpoint, { observe: 'response' });
   }
 
+  delBug(id) {
+    return this.http.delete(this.endpoint + '/' + id, this.httpOptions).subscribe(data => console.log(data));
+  }
+
 }
