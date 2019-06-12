@@ -46,6 +46,7 @@ export class BugListComponent implements OnInit, OnDestroy {
       this.startTimer(300);
       this.bugList = this.capitalizeData(data.body);
       this.commentsCollapseSystem(this.bugList.length);
+      this.maxPages = data.headers.get('totalpages');
     });
   }
 
@@ -188,7 +189,7 @@ export class BugListComponent implements OnInit, OnDestroy {
     this.collapsedRow.fill(true);
   }
 
- clearFilter(){
+ clearFilter() {
   this.filter.priority = '';
   this.filter.status = '';
   this.filter.reporter = '';

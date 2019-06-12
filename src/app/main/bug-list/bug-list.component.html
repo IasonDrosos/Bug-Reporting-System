@@ -8,7 +8,10 @@
   <div class="bg-dark px-4 pt-4 pb-3 text-light text-center n_container">
     <!-- Filter Collapse -->
     <div class="row px-3 pb-3 d-flex">
-      <button class="btn btn-info shadow n_search my-auto d-inline" (click)="filterShow()"> <img src="../../assets/search-solid.svg" class="d-inline align-center n_img"> </button>
+      <button class="btn btn-info shadow n_search my-auto d-inline" (click)="filterShow()">
+        <!-- <img src="../../assets/search-solid.svg" class="d-inline align-center n_img"> -->
+        <div class="add" style="background-image: url(../../assets/search_60fps.svg)"></div>
+      </button>
       <div [ngbCollapse]="!filterState" class="flex-fill">
         <div class="row ml-3 flex-fill justify-content-between">
           <div class="d-flex flex-grow-1 justify-content-between n_search_con shadow p-0 mx-3">
@@ -73,7 +76,10 @@
       </div>
       <div scope="col" class="col-2 n_date">Date Created </div>
       <div scope="col" class="col d-flex justify-content-between">
-        <button class="btn btn-success shadow" [routerLink]="['/create']"> <img src="../../assets/add.svg" class="d-inline-block align-top" alt=""> </button>
+        <button class="btn btn-success shadow" [routerLink]="['/create']">
+          <!-- <img src="../../assets/add.svg" class="d-inline-block align-top" alt="">  -->
+          <div class="add" style="background-image: url(../../assets/add_60fps.svg)"></div>
+        </button>
         <button class="btn btn-primary shadow" (click)="syncBugs()" id="syncIcon"> <img src="../../assets/refresh.svg" class="d-inline-block align-top" alt=""> </button>
       </div>
     </div>
@@ -98,11 +104,13 @@
         <div class="col-2 n_info">{{bug.createdAt | date}}</div>
         <div class="col d-flex justify-content-between">
           <button class="btn btn-secondary shadow" [routerLink]="['edit', bug.id]">
-             <img src="../../assets/edit.svg" class="d-inline-block align-top">
-             <!-- <div class="add" style="background-image: url(../../assets/add_60fps.svg)"></div> -->
-            </button>
-
-          <button class="btn btn-secondary shadow" (click)="changeCollapseStatus(i)"> <img src="../../assets/comments.svg" class="d-inline-block align-top"> </button>
+             <!-- <img src="../../assets/edit.svg" class="d-inline-block align-top"> -->
+             <div class="add" style="background-image: url(../../assets/edit_60fps.svg)"></div>
+        </button>
+          <button class="btn btn-secondary shadow" (click)="changeCollapseStatus(i)">
+            <!-- <img src="../../assets/comments.svg" class="d-inline-block align-top">  -->
+            <div class="add" style="background-image: url(../../assets/comments_60fps.svg)"></div>
+          </button>
         </div>
       </div>
       <!-- Bug Comments Collapsable -->
@@ -137,13 +145,18 @@
     <ul class="pagination justify-content-center" style="font-size: 1.2em">
       <li class="page-item">
         <a class="page-link" (click)="changePage('previous')" style="background-color: #343a40; color: #f8f9fa; border: 0px; border-radius: 0px 0px 0px 16px !important;">
-          <span>&laquo;</span>
+          <!-- <span>&laquo;</span> -->
+          <!-- <img src="../../assets/left.svg" class="d-inline-block align-top m-0" style="width: 23px; height: 23px;" m-0> -->
+          <div class="add" style="background-image: url(../../assets/left_60fps.svg); margin-right: -18px; margin-bottom: -12px;"></div>
         </a>
       </li>
-      <li class="page-item"><a class="page-link" style="background-color: #343a40; color: #f8f9fa; border: 0px;">{{(filter.page + 1 )}}</a></li>
+      <li class="page-item" style="font-size: 1.1em"><a class="page-link" style="background-color: #343a40; color: #f8f9fa; border: 0px">{{(filter.page + 1 )}} - {{maxPages}}</a></li>
+      <!-- <li class="page-item"><a class="page-link" style="background-color: #343a40; color: #f8f9fa; border: 0px;">{{filter.page}} - {{maxPages}}</a></li> -->
       <li class="page-item">
         <a class="page-link" (click)="changePage('next')" style="background-color: #343a40; color: #f8f9fa; border: 0px; border-radius: 0px 0px 16px 0px !important;">
-          <span>&raquo;</span>
+          <!-- <span>&raquo;</span> -->
+          <!-- <img src="../../assets/right.svg" class="d-inline-block align-top m-0" style="width: 23px; height: 23px;"> -->
+          <div class="add" style="background-image: url(../../assets/right_60fps.svg); margin-right: -18px; margin-bottom: -12px;"></div>
         </a>
       </li>
     </ul>
