@@ -46,6 +46,7 @@ export class BugListComponent implements OnInit, OnDestroy {
       this.startTimer(300);
       this.bugList = this.capitalizeData(data.body);
       this.commentsCollapseSystem(this.bugList.length);
+      this.maxPages = data.headers.get('totalpages');
     });
   }
 
@@ -87,6 +88,11 @@ export class BugListComponent implements OnInit, OnDestroy {
 
   editBug(bugID) {
     this.router.navigate(['edit', bugID]);
+  }
+
+  delBug(id) {
+    this.postmanService.delBug(id);
+    this.syncBugs();
   }
 
   createBug() {
