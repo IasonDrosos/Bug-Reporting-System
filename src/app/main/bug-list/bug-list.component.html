@@ -41,7 +41,10 @@
             </select>
           </div>
           <div class="align-self-center mx-3">
-            <button class="btn btn-warning shadow" (click)="clearFilter()"> <img src="../../assets/clear.svg" class="d-inline-block align-top" alt=""> </button>
+            <button class="btn btn-warning shadow" (click)="clearFilter()">
+               <!-- <img src="../../assets/clear_60fps.svg" class="d-inline-block align-top" alt=""> -->
+               <div class="add" style="background-image: url(../../assets/clear_60fps.svg)"></div>
+               </button>
           </div>
           <div class="align-self-center mx-3">
             <button type="submit" class="btn btn-light shadow n_button px-4" (click)="filteredSearch()">Submit</button>
@@ -112,7 +115,10 @@
             <!-- <img src="../../assets/comments.svg" class="d-inline-block align-top">  -->
             <div class="add" style="background-image: url(../../assets/comments_60fps.svg)"></div>
           </button>
-          <button class="btn btn-danger shadow" (click)="delBug(bug.id)" id="syncIcon"> <img src="../../assets/eraser-solid.svg" class="d-inline-block align-top" alt=""> </button>
+          <button class="btn btn-danger shadow" (click)="delBug(bug.id)">
+             <!-- <img src="../../assets/eraser_60fps.svg" class="d-inline-block align-top" alt=""> -->
+             <div class="add" style="background-image: url(../../assets/eraser_60fps.svg)"></div>
+            </button>
         </div>
       </div>
       <!-- Bug Comments Collapsable -->
