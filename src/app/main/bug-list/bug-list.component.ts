@@ -3,6 +3,7 @@ import { PostmanService } from 'src/app/Services/postman.service';
 import { faLongArrowAltUp } from '@fortawesome/free-solid-svg-icons';
 import { faLongArrowAltDown, faTimes, faCheck, faExclamation } from '@fortawesome/free-solid-svg-icons';
 import { Router } from '@angular/router';
+import { Filter } from 'src/app/models/filter.model';
 
 @Component({
   selector: 'app-bug-list',
@@ -18,17 +19,18 @@ export class BugListComponent implements OnInit, OnDestroy {
   faExclamation = faExclamation;
 
 
-
+  // Θα τα κρατήσουμε και εδώ και στο object Filter????
   stateDirection = 0; // 0 none //1 asc // 2 desc
   stateColumn = '';
 
   syncTime = '5:00';
   interval; // ID of setInterval (used for stopping it)
-  bugList = [];
+  bugList;
+  maxPages;
   collapsedRow = []; // used for comments dropdown status
   filterState = false;
 
-  filter = {
+  filter: Filter = {
     priority: '',
     title: '',
     status: '',
@@ -40,9 +42,9 @@ export class BugListComponent implements OnInit, OnDestroy {
   constructor(private postmanService: PostmanService, private router: Router) { }
 
   ngOnInit() {
-    this.postmanService.getTheBugs().subscribe((data: []) => {
+    this.postmanService.getTheBugs().subscribe((data) => {
       this.startTimer(300);
-      this.bugList = this.capitalizeData(data);
+      this.bugList = this.capitalizeData(data.body);
       this.commentsCollapseSystem(this.bugList.length);
     });
   }
@@ -72,8 +74,8 @@ export class BugListComponent implements OnInit, OnDestroy {
       }
     }
 
-    this.postmanService.getBugsByFilter(this.filter).subscribe((data: []) => {
-      this.bugList = this.capitalizeData(data);
+    this.postmanService.getBugsByFilter(this.filter).subscribe((data) => {
+      this.bugList = this.capitalizeData(data.body);
       this.commentsCollapseSystem(this.bugList.length);
     });
 
@@ -95,11 +97,11 @@ export class BugListComponent implements OnInit, OnDestroy {
     clearInterval(this.interval);
     this.startTimer(300);
 
-    this.postmanService.getTheBugs().subscribe((data: []) => {
-      this.bugList = this.capitalizeData(data);
+    this.postmanService.getTheBugs().subscribe((data) => {
+      this.maxPages = data.headers.get('totalpages');
+      this.bugList = this.capitalizeData(data.body);
       this.commentsCollapseSystem(this.bugList.length);
     });
-
     this.stateDirection = 0;
     this.stateColumn = '';
     this.filter.sort = { column: '', direction: '' };
@@ -132,9 +134,12 @@ export class BugListComponent implements OnInit, OnDestroy {
 
   changePage(direction: string) {
     if (direction === 'next') {
-      this.filter.page++;
-      console.log('next');
-      console.log(this.filter.page);
+      if (this.filter.page < this.maxPages - 1) {
+        this.filter.page++;
+        console.log('next');
+        console.log(this.filter.page);
+      }
+
     } else if (direction === 'previous') {
       if (this.filter.page !== 0) {
         this.filter.page--;
@@ -143,21 +148,17 @@ export class BugListComponent implements OnInit, OnDestroy {
 
       }
     }
-    // this.postmanService.getBugsByFilter(this.filter).subscribe((data: []) => {
-    //   this.bugList = this.capitalizeData(data);
-    //   this.commentsCollapseSystem(this.bugList.length);
-    //   console.log(data);
-    // });
     this.filteredSearch();
   }
 
   filteredSearch() {
-    this.postmanService.getBugsByFilter(this.filter).subscribe((data: []) => {
+    this.postmanService.getBugsByFilter(this.filter).subscribe((data) => {
+      this.maxPages = data.headers.get('totalpages');
       clearInterval(this.interval);
       this.startTimer(300);
       console.log(data);
 
-      this.bugList = this.capitalizeData(data);
+      this.bugList = this.capitalizeData(data.body);
       this.commentsCollapseSystem(this.bugList.length);
     });
   }
@@ -182,7 +183,12 @@ export class BugListComponent implements OnInit, OnDestroy {
     this.collapsedRow.fill(true);
   }
 
-
+  clearFilter() {
+    this.filter.priority = '';
+    this.filter.status = '';
+    this.filter.reporter = '';
+    this.filter.title = '';
+    this.syncBugs();
+  }
 
 }
-
