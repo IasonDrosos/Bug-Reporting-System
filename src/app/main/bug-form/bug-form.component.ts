@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { PostmanService } from 'src/app/Services/postman.service';
 import { NgForm } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
+import { Subscription } from 'rxjs';
 
 
 @Component({
@@ -30,6 +31,10 @@ export class BugFormComponent implements OnInit {
   buglist;
 
   alert: boolean;
+  timeOutID;
+  modeSub = new Subscription();
+  lightMode: boolean;
+
 
   constructor(private postmanService: PostmanService, private route: ActivatedRoute, private router: Router) { }
 
@@ -54,7 +59,8 @@ export class BugFormComponent implements OnInit {
         }
         console.log(this.bug);
       });
-      console.log(this.bugID);
+
+      this.modeSub = this.postmanService.modeSubject.subscribe(lightMode => this.lightMode = lightMode);
     }
   }
 
@@ -68,7 +74,7 @@ export class BugFormComponent implements OnInit {
         this.postmanService.editBug(this.bug);
       } else {
         this.postmanService.createBug(this.bug);
-        setTimeout(() => this.router.navigate(['']), 10000);
+        this.timeOutID = setTimeout(() => this.router.navigate(['']), 10000);
       }
       this.alert = true;
       setTimeout(() => this.alert = false, 10000);
@@ -82,6 +88,7 @@ export class BugFormComponent implements OnInit {
   }
 
   bugList() {
+    clearTimeout(this.timeOutID);
     this.router.navigate(['']);
   }
 

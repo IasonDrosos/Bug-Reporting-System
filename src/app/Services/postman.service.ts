@@ -3,13 +3,16 @@ import { HttpClient, HttpHeaders, HttpResponse } from '@angular/common/http';
 import { Sorting } from '../models/sorting.model';
 import { Bug } from '../models/bug.model';
 import { Filter } from '../models/filter.model';
-import { Observable } from 'rxjs';
+import { Observable, Subject } from 'rxjs';
 import { Config } from 'protractor';
 
 @Injectable({
   providedIn: 'root'
 })
 export class PostmanService {
+  lightMode = false;
+  modeSubject = new Subject<boolean>();
+
 
   httpOptions = {
     headers: new HttpHeaders({
@@ -30,12 +33,12 @@ export class PostmanService {
     return this.http.get(this.endpoint + '/' + bugId);
   }
 
-  getBugsByFilter(filterParams: Filter) : Observable<HttpResponse<Config>> {
+  getBugsByFilter(filterParams: Filter): Observable<HttpResponse<Config>> {
     let sort = ``;
     if (filterParams.sort.column) {
       sort = `&sort=${filterParams.sort.column},${filterParams.sort.direction}`;
     }
-    return this.http.get<Config>(this.endpoint + `?priority=${filterParams.priority}&title=${filterParams.title}&status=${filterParams.status}&reporter=${filterParams.reporter}&page=${filterParams.page}${sort}`,{ observe: 'response' });
+    return this.http.get<Config>(this.endpoint + `?priority=${filterParams.priority}&title=${filterParams.title}&status=${filterParams.status}&reporter=${filterParams.reporter}&page=${filterParams.page}${sort}`, { observe: 'response' });
   }
 
   editBug(bug: Bug) {
@@ -53,6 +56,11 @@ export class PostmanService {
 
   delBug(id) {
     return this.http.delete(this.endpoint + '/' + id, this.httpOptions).subscribe(data => console.log(data));
+  }
+
+  switchMode() {
+    this.lightMode = !this.lightMode;
+    this.modeSubject.next(this.lightMode);
   }
 
 }

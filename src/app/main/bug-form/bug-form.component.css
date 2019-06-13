@@ -1,4 +1,7 @@
-input, select, textarea, button {
+input,
+select,
+textarea,
+button {
   border-radius: 16px;
 }
 
@@ -52,19 +55,23 @@ input, select, textarea, button {
   outline: 0 !important;
   box-shadow: 0 0 0 0.2rem #007bff !important;
 }
-.n_header{
+
+.n_header {
   font-size: 1.5em;
   font-weight: 400 !important;
 }
-.n_titles{
+
+.n_titles {
   font-size: 1.2em;
   font-weight: 400 !important;
 }
-.n_info{
+
+.n_info {
   font-size: 1em;
   font-weight: 400 !important;
 }
-.alert-box{
+
+.alert-box {
   margin-top: -88px !important;
   margin-bottom: 88px !important;
   margin-left: 32px;

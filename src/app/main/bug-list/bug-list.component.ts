@@ -4,6 +4,7 @@ import { faLongArrowAltUp } from '@fortawesome/free-solid-svg-icons';
 import { faLongArrowAltDown, faTimes, faCheck, faExclamation } from '@fortawesome/free-solid-svg-icons';
 import { Router } from '@angular/router';
 import { Filter } from 'src/app/models/filter.model';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-bug-list',
@@ -30,6 +31,9 @@ export class BugListComponent implements OnInit, OnDestroy {
   collapsedRow = []; // used for comments dropdown status
   filterState = false;
 
+  modeSub = new Subscription();
+  lightMode: boolean;
+
   filter: Filter = {
     priority: '',
     title: '',
@@ -48,10 +52,13 @@ export class BugListComponent implements OnInit, OnDestroy {
       this.commentsCollapseSystem(this.bugList.length);
       this.maxPages = data.headers.get('totalpages');
     });
+
+    this.modeSub = this.postmanService.modeSubject.subscribe(lightMode => this.lightMode = lightMode);
   }
 
   ngOnDestroy() {
     clearInterval(this.interval);
+    this.modeSub.unsubscribe();
   }
 
   sortTheBugs(column: string) {
@@ -99,18 +106,8 @@ export class BugListComponent implements OnInit, OnDestroy {
     this.router.navigate(['create']);
   }
 
-  syncBugs() { // check
-    clearInterval(this.interval);
-    this.startTimer(300);
-
-    this.postmanService.getTheBugs().subscribe((data) => {
-      this.maxPages = data.headers.get('totalpages');
-      this.bugList = this.capitalizeData(data.body);
-      this.commentsCollapseSystem(this.bugList.length);
-    });
-    this.stateDirection = 0;
-    this.stateColumn = '';
-    this.filter.sort = { column: '', direction: '' };
+  syncBugs() {
+    this.filteredSearch();
   }
 
   startTimer(counDownInSeconds: number) {
@@ -158,13 +155,12 @@ export class BugListComponent implements OnInit, OnDestroy {
   }
 
   filteredSearch() {
+    clearInterval(this.interval);
+    this.startTimer(300);
     this.postmanService.getBugsByFilter(this.filter).subscribe((data) => {
       this.maxPages = data.headers.get('totalpages');
-      clearInterval(this.interval);
-      this.startTimer(300);
       console.log(data);
-
-      this.bugList = this.capitalizeData(data.body);
+      this.bugList = data.body;
       this.commentsCollapseSystem(this.bugList.length);
     });
   }
@@ -176,7 +172,10 @@ export class BugListComponent implements OnInit, OnDestroy {
         bug.title = bug.title.toLowerCase().charAt(0).toUpperCase() + bug.title.slice(1);
       }
       if (bug.status) {
-        bug.status = bug.status.toLowerCase().charAt(0).toUpperCase() + bug.status.slice(1);
+        bug.status = bug.status.toLowerCase();
+      }
+      if (bug.reporter) {
+        bug.reporter = bug.reporter.toUpperCase();
       }
       return bug;
     });
