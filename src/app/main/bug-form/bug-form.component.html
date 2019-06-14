@@ -92,7 +92,7 @@
               <div class="form-group col-9">
                 <select class="custom-select n_info" #bugStatus="ngModel" name="bugStatus" [(ngModel)]="bug.status"
                 id="bugStatus" required [ngClass]="{'disabled' : !bugID}">
-                <option selected hidden value="pending">Pending</option>
+                <option hidden value="pending">Pending</option>
                 <option value="ready for test">Ready for Test</option>
                 <option value="done">Done</option>
                 <option value="rejected">Rejected</option>
