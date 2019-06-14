@@ -77,3 +77,24 @@ button {
   margin-left: 32px;
   margin-right: 32px;
 }
+
+/* light-theme form */
+.light-theme form h2,
+.light-theme form p,
+.light-theme form label {
+  color: #343a40 !important;
+}
+
+.light-theme .form-group h2,
+.light-theme .form-group label {
+  color: #343a40 !important;
+}
+
+.light-theme #bugDate,
+.light-theme #bugStatus {
+  background-color: #dfdfdf !important;
+}
+
+.light-theme form .bg-dark {
+  background-color: #cccccc !important;
+}

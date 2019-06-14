@@ -53,7 +53,14 @@ export class BugListComponent implements OnInit, OnDestroy {
       this.maxPages = data.headers.get('totalpages');
     });
 
+    if (localStorage.getItem('lightMode') === null) {
+      this.lightMode = this.postmanService.lightMode;
+      this.modeSub = this.postmanService.modeSubject.subscribe(lightMode => this.lightMode = lightMode);
+    } else {
+      this.lightMode = this.postmanService.getLocalStorageStatus();
+    }
     this.modeSub = this.postmanService.modeSubject.subscribe(lightMode => this.lightMode = lightMode);
+
   }
 
   ngOnDestroy() {

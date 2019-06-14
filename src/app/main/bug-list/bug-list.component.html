@@ -15,7 +15,7 @@
       </button>
       <div [ngbCollapse]="!filterState" class="flex-fill" id="search" [ngClass]="{'light-theme': lightMode}">
         <div class="row ml-3 flex-fill justify-content-between">
-          <div class="d-flex flex-grow-1 justify-content-between n_search_con shadow p-0 mx-3">
+          <div class="d-flex flex-grow-1 justify-content-between n_search_con shadow p-0 mx-3" id="searchBox">
             <input type="text" class="form-control n_info n_filter" #filterTitle="ngModel" name="filterTitle" [(ngModel)]="filter.title" id="filterTitle" placeholder="Title" minlength="3">
             <select class="custom-select n_info n_filter ml-4" #filterStatus="ngModel" name="filterStatus" [(ngModel)]="filter.status" id="filterStatus">
               <option selected hidden value="">Status</option>
@@ -123,7 +123,7 @@
       </div>
       <!-- Bug Comments Collapsable -->
       <div *ngIf="!collapsedRow[i]">
-        <div id="collapseExample" [ngbCollapse]="collapsedRow[i]" class="n_comment shadow">
+        <div id="collapseComments" [ngbCollapse]="collapsedRow[i]" class="n_comment shadow">
           <div *ngIf="!bug.comments || bug.comments.length === 0" style="border-top: 1px solid #454d55">
             <label class="text-light">No comments assigned to this bug. :(</label>
           </div>

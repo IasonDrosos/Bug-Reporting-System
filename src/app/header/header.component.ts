@@ -14,7 +14,14 @@ export class HeaderComponent implements OnInit, OnDestroy {
   constructor(private postmanService: PostmanService) { }
 
   ngOnInit() {
+    if (localStorage.getItem('lightMode') === null) {
+      this.lightMode = this.postmanService.lightMode;
+      this.modeSub = this.postmanService.modeSubject.subscribe(lightMode => this.lightMode = lightMode);
+    } else {
+      this.lightMode = this.postmanService.getLocalStorageStatus();
+    }
     this.modeSub = this.postmanService.modeSubject.subscribe(lightMode => this.lightMode = lightMode);
+
   }
 
   switchMode() {

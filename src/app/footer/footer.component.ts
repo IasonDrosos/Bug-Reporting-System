@@ -12,11 +12,19 @@ export class FooterComponent implements OnInit, OnDestroy {
 
   modeSub = new Subscription();
   lightMode: boolean;
+  websiteLoadCount = 0;
 
   constructor(private postmanService: PostmanService) { }
 
   ngOnInit() {
+    if (localStorage.getItem('lightMode') === null) {
+      this.lightMode = this.postmanService.lightMode;
+      this.modeSub = this.postmanService.modeSubject.subscribe(lightMode => this.lightMode = lightMode);
+    } else {
+      this.lightMode = this.postmanService.getLocalStorageStatus();
+    }
     this.modeSub = this.postmanService.modeSubject.subscribe(lightMode => this.lightMode = lightMode);
+
   }
   ngOnDestroy() {
     this.modeSub.unsubscribe();

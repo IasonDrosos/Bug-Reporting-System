@@ -15,7 +15,16 @@ export class MainComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
 
+    if (localStorage.getItem('lightMode') === null) {
+      this.lightMode = this.postmanService.lightMode;
+      this.modeSub = this.postmanService.modeSubject.subscribe(lightMode => this.lightMode = lightMode);
+    } else {
+      this.lightMode = this.postmanService.getLocalStorageStatus();
+    }
     this.modeSub = this.postmanService.modeSubject.subscribe(lightMode => this.lightMode = lightMode);
+
+
+
   }
   ngOnDestroy() {
     this.modeSub.unsubscribe();

@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { PostmanService } from 'src/app/Services/postman.service';
 import { NgForm } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -10,7 +10,7 @@ import { Subscription } from 'rxjs';
   templateUrl: './bug-form.component.html',
   styleUrls: ['./bug-form.component.css']
 })
-export class BugFormComponent implements OnInit {
+export class BugFormComponent implements OnInit, OnDestroy {
   bugID: any = '';
 
   bug: any = {
@@ -18,7 +18,7 @@ export class BugFormComponent implements OnInit {
     description: '',
     priority: 1,
     reporter: '',
-    status: 'pending' as string,
+    status: 'pending',
     createdAt: new Date(),
     comments: []
   };
@@ -29,9 +29,9 @@ export class BugFormComponent implements OnInit {
   };
 
   buglist;
-
   alert: boolean;
   timeOutID;
+
   modeSub = new Subscription();
   lightMode: boolean;
 
@@ -59,9 +59,19 @@ export class BugFormComponent implements OnInit {
         }
         console.log(this.bug);
       });
-
-      this.modeSub = this.postmanService.modeSubject.subscribe(lightMode => this.lightMode = lightMode);
     }
+
+    if (localStorage.getItem('lightMode') === null) {
+      this.lightMode = this.postmanService.lightMode;
+      this.modeSub = this.postmanService.modeSubject.subscribe(lightMode => this.lightMode = lightMode);
+    } else {
+      this.lightMode = this.postmanService.getLocalStorageStatus();
+    }
+    this.modeSub = this.postmanService.modeSubject.subscribe(lightMode => this.lightMode = lightMode);
+
+
+
+
   }
 
 
@@ -90,6 +100,10 @@ export class BugFormComponent implements OnInit {
   bugList() {
     clearTimeout(this.timeOutID);
     this.router.navigate(['']);
+  }
+
+  ngOnDestroy() {
+    this.modeSub.unsubscribe();
   }
 
 }

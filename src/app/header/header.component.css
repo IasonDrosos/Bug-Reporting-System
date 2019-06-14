@@ -27,3 +27,13 @@ button {
 .add:hover {
   animation-name: play60;
 }
+
+
+/* .light-theme header*/
+nav.light-theme {
+  background-color: #cccccc !important;
+}
+
+nav.light-theme div a:nth-of-type(2) {
+  color: #343a40 !important;
+}

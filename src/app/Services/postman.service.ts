@@ -11,6 +11,9 @@ import { Config } from 'protractor';
 })
 export class PostmanService {
   lightMode = false;
+
+
+
   modeSubject = new Subject<boolean>();
 
 
@@ -58,9 +61,19 @@ export class PostmanService {
     return this.http.delete(this.endpoint + '/' + id, this.httpOptions).subscribe(data => console.log(data));
   }
 
+  getLocalStorageStatus() {
+    if (localStorage.getItem('lightMode') !== null) {
+      this.lightMode = JSON.parse(localStorage.getItem('lightMode'));
+      return this.lightMode;
+    }
+  }
+
   switchMode() {
     this.lightMode = !this.lightMode;
     this.modeSubject.next(this.lightMode);
+    localStorage.setItem('lightMode', this.lightMode.toString());
+    console.log(12);
   }
+
 
 }

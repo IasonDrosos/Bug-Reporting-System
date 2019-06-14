@@ -1,0 +1,8 @@
+/* .light-theme footer */
+.footer.light-theme {
+  background-color: #cccccc !important;
+}
+
+.footer.light-theme p {
+  color: #343a40 !important;
+}

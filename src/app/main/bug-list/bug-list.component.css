@@ -100,6 +100,59 @@ img {
   animation: rotating 2s linear infinite;
 }
 
+/* .light-theme buglist */
+#search.light-theme {
+  background-color: #cccccc !important;
+}
+
+#search.light-theme #searchBox {
+  background-color: #b8b8b8 !important;
+}
+
+#priority.light-theme {
+  background-color: #cccccc !important;
+}
+
+.light-theme ul li a {
+  background-color: #cccccc !important;
+  color: #343a40 !important;
+}
+
+#priority.light-theme #priority1 {
+  color: #fff934 !important;
+  font-weight: 400 !important;
+}
+
+#priority.light-theme #priority2 {
+  color: #ff9f10 !important;
+  font-weight: 400 !important;
+}
+
+#priority.light-theme #priority3 {
+  color: #ff1010 !important;
+  font-weight: 400 !important;
+}
+
+ul.light-theme .light-theme a,
+.light-theme h1,
+.light-theme .n_header,
+.light-theme .n_date,
+.light-theme .n_titles,
+.light-theme .n_info {
+  color: #343a40 !important;
+}
+
+.light-theme #collapseComments {
+  background-color: #cccccc !important;
+}
+
+.light-theme #collapseComments .n_info,
+.light-theme #collapseComments div span,
+.light-theme #collapseComments div label {
+  color: #343a40 !important;
+}
+
+
 @-webkit-keyframes rotating
 
 /* Safari and Chrome */

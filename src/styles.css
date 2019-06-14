@@ -2,74 +2,18 @@
   font-weight: 300 !important;
 }
 
+/*light-theme General */
 .light-theme {
   background-color: #e8e8e8 !important;
   color: #343a40 !important;
-
-}
-
-nav.light-theme {
-  background-color: #cccccc !important;
-}
-
-nav.light-theme div a:nth-of-type(2) {
-  color: #343a40 !important;
-}
-
-.footer.light-theme {
-  background-color: #cccccc !important;
-
-}
-
-.footer.light-theme p {
-  color: #343a40 !important;
-}
-
-#search.light-theme {
-  background-color: #cccccc !important;
-}
-
-#search.light-theme div:nth-child(1) div:nth-child(1) {
-  background-color: #b8b8b8 !important;
-}
-
-#priority.light-theme {
-  background-color: #cccccc !important;
-}
-
-.light-theme ul li a {
-  background-color: #cccccc !important;
-  color: #343a40 !important;
-}
-
-#priority.light-theme #priority1 {
-  color: #fff934 !important;
-  font-weight: 400 !important;
-}
-
-#priority.light-theme #priority2 {
-  color: #ff9f10 !important;
-  font-weight: 400 !important;
-}
-
-#priority.light-theme #priority3 {
-  color: #ff1010 !important;
-  font-weight: 400 !important;
-}
-
-ul.light-theme .light-theme a,
-.light-theme h1,
-.light-theme .n_header,
-.light-theme .n_date,
-.light-theme .n_titles,
-.light-theme .n_info {
-
-  color: #343a40 !important;
-
 }
 
 .light-theme .bg-dark {
   background-color: #cccccc !important;
+}
+
+.light-theme.bg-deepdark {
+  background-color: #e8e8e8 !important;
 }
 
 
