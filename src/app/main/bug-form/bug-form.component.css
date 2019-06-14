@@ -98,3 +98,7 @@ button {
 .light-theme form .bg-dark {
   background-color: #cccccc !important;
 }
+
+.light-theme h1 {
+  color: #343a40 !important;
+}
