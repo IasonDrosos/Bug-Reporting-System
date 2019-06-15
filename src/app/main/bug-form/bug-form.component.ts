@@ -85,6 +85,14 @@ export class BugFormComponent implements OnInit, OnDestroy {
       } else {
         this.postmanService.createBug(this.bug);
         this.timeOutID = setTimeout(() => this.router.navigate(['']), 10000);
+        let timeleft = 9;
+        let downloadTimer = setInterval(function(){
+         document.getElementById("countdown").innerHTML = timeleft + " seconds";
+         timeleft -= 1;
+         if(timeleft <= 0){
+         clearInterval(downloadTimer);
+         }
+        }, 1000);
       }
       this.alert = true;
       setTimeout(() => this.alert = false, 10000);
@@ -107,3 +115,4 @@ export class BugFormComponent implements OnInit, OnDestroy {
   }
 
 }
+
