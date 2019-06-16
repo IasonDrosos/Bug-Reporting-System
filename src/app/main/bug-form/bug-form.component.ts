@@ -41,6 +41,11 @@ export class BugFormComponent implements OnInit, OnDestroy {
       this.bugID = this.route.snapshot.params.id;
       this.postmanService.getBugById(this.bugID).subscribe(data => {
         this.bug = data;
+        if (!this.bug.title) {
+          this.bug.title = 'Bug title';
+        } else {
+          this.bug.title = this.bug.title.toLowerCase();
+        }
         if (!this.bug.status) {
           this.bug.status = 'pending';
         } else if (this.bug.status.toLowerCase() !== 'done' && this.bug.status.toLowerCase() !== 'rejected' && this.bug.status.toLowerCase() !== 'ready for test' && this.bug.status.toLowerCase() !== 'pending') {
@@ -77,7 +82,7 @@ export class BugFormComponent implements OnInit, OnDestroy {
         this.postmanService.createBug(this.bug);
         this.timeOutID = setTimeout(() => this.router.navigate(['']), 10000);
         let timeleft = 9;
-        let downloadTimer = setInterval(function () {
+        const downloadTimer = setInterval(function() {
           document.getElementById('countdown').innerHTML = timeleft + ' seconds';
           timeleft -= 1;
           if (timeleft <= 0) {

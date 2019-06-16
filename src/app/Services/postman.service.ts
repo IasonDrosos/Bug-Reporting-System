@@ -13,7 +13,6 @@ export class PostmanService {
   modeSubject = new Subject<boolean>();
   endpoint = 'https://bug-report-system-server.herokuapp.com/bugs';
 
-
   httpOptions = {
     headers: new HttpHeaders({
       'Content-Type': 'application/json',
