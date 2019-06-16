@@ -151,21 +151,16 @@ export class BugListComponent implements OnInit, OnDestroy {
 
   filterShow() {
     this.filterState = !this.filterState;
-    console.log(this.filterState);
   }
 
   changePage(direction: string) {
     if (direction === 'next') {
       if (this.filter.page < this.maxPages - 1) {
         this.filter.page++;
-        console.log('next');
-        console.log(this.filter.page);
       }
     } else if (direction === 'previous') {
       if (this.filter.page !== 0) {
         this.filter.page--;
-        console.log('previous');
-        console.log(this.filter.page);
       }
     }
     this.filteredSearch();
@@ -176,10 +171,8 @@ export class BugListComponent implements OnInit, OnDestroy {
     this.startTimer(300);
     this.postmanService.getBugsByFilter(this.filter).subscribe((data) => {
       this.maxPages = data.headers.get('totalpages');
-      console.log(data);
       this.bugList = this.capitalizeData(data.body);
       this.commentsCollapseSystem(this.bugList.length);
-      console.log(this.bugList);
     });
   }
 

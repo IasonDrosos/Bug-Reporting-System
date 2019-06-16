@@ -55,7 +55,6 @@ export class BugFormComponent implements OnInit, OnDestroy {
         } else {
           this.bug.reporter = this.bug.reporter.toLowerCase();
         }
-        console.log(this.bug);
       });
     }
 
@@ -89,8 +88,6 @@ export class BugFormComponent implements OnInit, OnDestroy {
       }
       this.alert = true;
       setTimeout(() => this.alert = false, 10000);
-      console.log(this.bug);
-      console.log(form.status);
     }
   }
 

@@ -45,11 +45,11 @@ export class PostmanService {
   }
 
   editBug(bug: Bug) {
-    return this.http.put(this.endpoint + '/' + bug.id, bug, this.httpOptions).subscribe(data => console.log(data));
+    return this.http.put(this.endpoint + '/' + bug.id, bug, this.httpOptions).subscribe();
   }
 
   createBug(bug: Bug) {
-    return this.http.post(this.endpoint, bug, this.httpOptions).subscribe(data => console.log(data));
+    return this.http.post(this.endpoint, bug, this.httpOptions).subscribe();
   }
 
   getConfigResponse(): Observable<HttpResponse<Config>> {
@@ -58,7 +58,7 @@ export class PostmanService {
   }
 
   delBug(id) {
-    return this.http.delete(this.endpoint + '/' + id, this.httpOptions).subscribe(data => console.log(data));
+    return this.http.delete(this.endpoint + '/' + id, this.httpOptions).subscribe();
   }
 
   getLocalStorageStatus() {
@@ -72,7 +72,6 @@ export class PostmanService {
     this.lightMode = !this.lightMode;
     this.modeSubject.next(this.lightMode);
     localStorage.setItem('lightMode', this.lightMode.toString());
-    console.log(12);
   }
 
 }
