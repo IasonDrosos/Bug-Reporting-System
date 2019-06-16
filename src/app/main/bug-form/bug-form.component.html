@@ -1,0 +1,173 @@
+<div class="bg-deepdark justify-content-center flex-fill n_container py-5" [ngClass]="{'light-theme': lightMode}">
+  <div class="container n_container no-select px-0">
+    <!-- Title -->
+    <h1 class="display-4 text-light text-center no-select" [ngClass]="{hidden : bugID}">Add a Bug</h1>
+    <h1 class="display-4 text-light text-center" [ngClass]="{hidden : !bugID}">Edit Bug</h1>
+    <!-- Close Button -->
+    <button class="btn btn-danger shadow float-right px-5 mx-5 my-4" (click)="bugList()">Close</button>
+    <!-- Form -->
+    <form class="bg-dark shadow p-5" id="bugForm" #bugForm="ngForm" (ngSubmit)="print(bugForm)" autocomplete="off" ngNativeValidate>
+      <div class="form-group">
+        <h2 class="text-light pb-3 mb-3" id="formTitle">Bug Info</h2>
+        <div class="row ">
+          <div class="col-7">
+            <!-- Priority Radio Buttons -->
+            <div class="form-row align-items-center">
+              <div class="form-group col-3">
+                <p class="h4 text-light pr-3">Priority</p>
+              </div>
+              <div class="form-group col-9 d-flex justify-content-around">
+                <div class="custom-control custom-radio custom-control-inline pr-3">
+                  <input class="custom-control-input" type="radio" #bugPriority="ngModel" name="bugPriority" [(ngModel)]="bug.priority" id="priority1" [value]=1>
+                  <label class="custom-control-label text-light n_info" for="priority1">Minor</label>
+                </div>
+                <div class="custom-control custom-radio custom-control-inline pr-3">
+                  <input class="custom-control-input" type="radio" #bugPriority="ngModel" name="bugPriority" [(ngModel)]="bug.priority" id="priority2" [value]=2>
+                  <label class="custom-control-label text-light n_info" for="priority2">Major</label>
+                </div>
+                <div class="custom-control custom-radio custom-control-inline-inline pr-3">
+                  <input class="custom-control-input" type="radio" #bugPriority="ngModel" name="bugPriority" [(ngModel)]="bug.priority" id="priority3" [value]=3>
+                  <label class="custom-control-label text-light n_info" for="priority3">Critical</label>
+                </div>
+              </div>
+            </div>
+            <!-- Title input -->
+            <div class="form-row">
+              <div class="form-group col-3">
+                <label for="bugTitle" class="text-light h4">Title</label>
+              </div>
+              <div class="form-group col-9">
+                <input type="text" class="form-control n_info" #bugTitle="ngModel" name="bugTitle" [(ngModel)]="bug.title" id="bugTitle" placeholder="Bug Title" minlength="4" maxlength="20" required>
+              </div>
+            </div>
+            <!-- Description Input -->
+            <div class="form-row">
+              <div class="form-group col-3">
+                <label for="bugDescription" class="text-light h4">Description</label>
+              </div>
+              <div class="form-group col-9">
+                <textarea type="text" class="form-control n_info" #bugDescription="ngModel" name="bugDescription" [(ngModel)]="bug.description" id="bugDescription" placeholder="Describe the Bug" minlength="5" maxlength="150" required></textarea>
+              </div>
+            </div>
+          </div>
+          <div class="col-5">
+            <!-- Autofill Date -->
+            <div class="form-row">
+              <div class="form-group col-3">
+                <label for="bugDate" class="text-light h4">Date</label>
+              </div>
+              <div class="form-group col-9">
+                <span type="text" class="form-control n_info" id="bugDate" [ngClass]="{'disabled' : true}">{{bug.createdAt | date: "dd/MM/yy"}}</span>
+              </div>
+            </div>
+            <!-- Reporter Dropdown -->
+            <div class="form-row">
+              <div class="form-group col-3">
+                <label for="bugReporter" class="text-light h4">Reporter</label>
+              </div>
+              <div class="form-group col-9">
+                <select class="custom-select n_info" #bugReporter="ngModel" name="bugReporter" [(ngModel)]="bug.reporter" id="bugReporter" required>
+                  <option selected hidden value="">Choose your position</option>
+                  <option value="qa">QA</option>
+                  <option value="po">PO</option>
+                  <option value="dev">DEV</option>
+                </select>
+              </div>
+            </div>
+            <!-- Satus Dropdown -->
+            <div class="form-row">
+              <div class="form-group col-3">
+                <label for="bugStatus" class="text-light h4">Status</label>
+              </div>
+              <div class="form-group col-9">
+                <select class="custom-select n_info" #bugStatus="ngModel" name="bugStatus" [(ngModel)]="bug.status" id="bugStatus" required [ngClass]="{'disabled' : !bugID}">
+                  <option hidden value="pending">Pending</option>
+                  <option value="ready for test">Ready for Test</option>
+                  <option value="done">Done</option>
+                  <option value="rejected">Rejected</option>
+                </select>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- Add Comment -->
+      <div [ngClass]="{hidden : !bugID}">
+        <h2 class="text-light pb-3 my-3" id="formTitle">Add a Comment</h2>
+        <div class="row">
+          <div class="col-7">
+            <!-- Comment Whitespace -->
+            <div class="form-row">
+              <div class="form-group col-3">
+                <label for="bugComment" class="text-light h4">Comment</label>
+              </div>
+              <div class="form-group col-9">
+                <textarea type="text" class="form-control n_info" #CommentDescription="ngModel" name="CommentDescription" [(ngModel)]="comment.description" id="bugComment" placeholder="Type your comment here!" minlength="5" maxlength="150" [attr.required]="comment.reporter.length>2 ? '' : null"></textarea>
+              </div>
+            </div>
+          </div>
+          <div class="col-5">
+            <!-- Comment Reporter -->
+            <div class="form-row">
+              <div class="form-group col-3">
+                <label for="bugName" class="text-light h4">Name</label>
+              </div>
+              <div class="form-group col-9">
+                <input type="text" class="form-control n_info" #CommentReporter="ngModel" name="CommentReporter" [(ngModel)]="comment.reporter" id="bugName" placeholder="Type your Name" minlength="3" [attr.required]="comment.description.length>4 ? '' : null">
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- Submit Button -->
+      <div class="d-flex justify-content-end">
+        <button type="submit" class="btn btn-primary shadow px-5">Submit</button>
+      </div>
+    </form>
+    <!-- Alert Create -->
+    <div [ngClass]="{hidden : bugID}" *ngIf="bugForm.submitted && alert.valueOf(true)" class="alert alert-success alert-box success-dismissible fade show rounded shadow" role="success">
+      <span class="h4"><strong>"{{bug.title}}"</strong> has been reported successfully. Yeah!</span>
+      <img src="../../assets/check-solid.svg" width="30" height="30" class="align-top ml-5" alt="">
+      <small class="d-block">You will be redirected to the Reported Bugs page in <span id="countdown"></span></small>
+    </div>
+    <!-- Alert Edit -->
+    <div [ngClass]="{hidden : !bugID}" *ngIf="bugForm.submitted && alert.valueOf(true)" class="alert alert-success alert-box success-dismissible fade show rounded shadow" role="success">
+      <span class="h4"><strong>"{{bug.title}}"</strong> was saved successfully. Woo Hoo!</span>
+      <img src="../../assets/check-solid.svg" width="30" height="30" class="d-inline-block align-top ml-5" alt="">
+      <small class="d-block"> </small>
+    </div>
+    <!-- Comment List -->
+    <div class="form-group bg-dark px-5 py-4 mt-5 shadow" id="bugForm" [ngClass]="{hidden : !bugID}">
+      <!-- Title -->
+      <h2 class="text-light pb-3 mb-3" id="formTitle">Bug Comments</h2>
+      <div>
+        <!-- Message in case of no comments -->
+        <div *ngIf="!bug.comments">
+          <label class="text-light">No comments assigned to this bug. :(</label>
+        </div>
+        <!-- Comments Labels -->
+        <div *ngIf="bug.comments" class="row mb-2">
+          <div class="col-3">
+            <label class="h4 text-light">Name</label>
+          </div>
+          <div class="col-9">
+            <label class="h4 text-light">Comment</label>
+          </div>
+        </div>
+        <!-- List of comments -->
+        <div *ngFor="let comment of bug.comments">
+          <div class="row" *ngIf="comment.reporter || comment.description">
+            <div class="col-3">
+              <label *ngIf="comment.reporter" class="text-light n_info">{{comment.reporter}}</label>
+              <label *ngIf="!comment.reporter" class="text-light n_info">*Unknown*</label>
+            </div>
+            <div class="col-9">
+              <label *ngIf="comment.description" class="text-light n_info">{{comment.description}}</label>
+              <label *ngIf="!comment.description" class="text-light n_info">*Empty*</label>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

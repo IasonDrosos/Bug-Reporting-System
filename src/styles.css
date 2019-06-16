@@ -1,1 +1,31 @@
-/* You can add global styles to this file, and also import other style files */
+* {
+  font-weight: 300 !important;
+}
+
+/*light-theme General */
+.light-theme {
+  background-color: #e8e8e8 !important;
+  color: #343a40 !important;
+}
+
+.light-theme .bg-dark {
+  background-color: #cccccc !important;
+}
+
+.light-theme.bg-deepdark {
+  background-color: #e8e8e8 !important;
+}
+
+
+.no-select {
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -khtml-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+.n_container {
+  min-width: 1015px !important;
+}

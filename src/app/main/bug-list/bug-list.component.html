@@ -1,22 +1,163 @@
-<div class="container">
-<table class="table table-dark">
-  <thead>
-    <tr class="text-center">
-      <th (click)="sortTheBugs('title')" scope="col" class=" table-head ">Title  <span *ngIf="stateColumn === 'title'"> <span *ngIf="stateDirection ===2"><fa-icon [icon]="faArrowAltCircleUp"></fa-icon></span> <span *ngIf="stateDirection === 1"><fa-icon [icon]="faArrowAltCircleDown"></fa-icon></span></span></th>
-      <th (click)="sortTheBugs('priority')" scope="col" class="table-head">Priority  <span *ngIf="stateColumn === 'priority'"> <span *ngIf="stateDirection ===2"><fa-icon [icon]="faArrowAltCircleUp"></fa-icon></span> <span *ngIf="stateDirection === 1"><fa-icon [icon]="faArrowAltCircleDown"></fa-icon></span></span></th>
-      <th (click)="sortTheBugs('reporter')" scope="col" class="table-head">Reporter <span *ngIf="stateColumn === 'reporter'"> <span *ngIf="stateDirection ===2"><fa-icon [icon]="faArrowAltCircleUp"></fa-icon></span> <span *ngIf="stateDirection === 1"><fa-icon [icon]="faArrowAltCircleDown"></fa-icon></span></span></th>
-      <th  scope="col" style="font-size: 1.5rem;">Date Created </th>
-      <th (click)="sortTheBugs('status')" scope="col" class="table-head">Status <span *ngIf="stateColumn === 'status'"> <span *ngIf="stateDirection ===2"><fa-icon [icon]="faArrowAltCircleUp"></fa-icon></span> <span *ngIf="stateDirection === 1"><fa-icon [icon]="faArrowAltCircleDown"></fa-icon></span></span></th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr *ngFor="let bug of bugList" class="text-center">
-      <th scope="row">{{bug.title}}</th>
-      <td >{{bug.priority}}</td>
-      <td >{{bug.reporter}}</td>
-      <td >{{bug.createdAt | date}}</td>
-      <td >{{bug.status}}</td>
-    </tr>
-  </tbody>
-</table>
+<div class="container flex-fill n_container no-select px-0 py-5" [ngClass]="{'light-theme': lightMode}">
+  <div class="d-flex justify-content-center ">
+    <button class="btn btn-info shadow n_search my-auto d-inline" (click)="filterShow()" style="margin-bottom: -74px !important; margin-left: 24px; z-index: 1;">
+      <div class="add" style="background-image: url(../../assets/search_60fps.svg)"></div>
+    </button>
+    <h1 class="display-4 text-light text-center m-auto d-inline" [ngClass]="{hidden : bugID}">Reported Bugs</h1>
+  </div>
+  <div class="bg-dark px-4 pt-4 pb-3 text-light text-center n_container shadow">
+    <!-- Filter Collapse -->
+    <div class="row ml-4 px-3 pb-3 d-flex">
+      <div [@openClose]="!filterState ? 'open' : 'closed'" class="flex-fill" id="search" [ngClass]="{'light-theme': lightMode}">
+        <div class="row ml-3 flex-fill justify-content-between">
+          <div class="d-flex flex-grow-1 justify-content-between n_search_con shadow p-0 mx-3" id="searchBox">
+            <input type="text" class="form-control n_info n_filter" #filterTitle="ngModel" name="filterTitle" [(ngModel)]="filter.title" id="filterTitle" placeholder="Title" minlength="3">
+            <select class="custom-select n_info n_filter ml-4" #filterStatus="ngModel" name="filterStatus" [(ngModel)]="filter.status" id="filterStatus">
+              <option selected hidden value="">Status</option>
+              <option value=""><strong>All</strong></option>
+              <option value="pending">Pending</option>
+              <option value="ready for test">Ready for Test</option>
+              <option value="done">Done</option>
+              <option value="rejected">Rejected</option>
+            </select>
+            <select class="custom-select n_info n_filter mx-4" #filterPriority="ngModel" name="filterPriority" [(ngModel)]="filter.priority" id="filterPriority">
+              <option selected hidden value="">Priority</option>
+              <option value=""><strong>All</strong></option>
+              <option value="1">Minor</option>
+              <option value="2">Major</option>
+              <option value="3">Critical</option>
+            </select>
+            <select class="custom-select n_info n_filter" #filterReporter="ngModel" name="filterReporter" [(ngModel)]="filter.reporter" id="filterReporter">
+              <option selected hidden value="">Reporter</option>
+              <option value=""><strong>All</strong></option>
+              <option value="qa">QA</option>
+              <option value="po">PO</option>
+              <option value="dev">DEV</option>
+            </select>
+          </div>
+          <div class="align-self-center mx-3">
+            <button class="btn btn-warning shadow" (click)="clearFilter()">
+              <div class="add" style="background-image: url(../../assets/clear_60fps.svg)"></div>
+            </button>
+          </div>
+          <div class="align-self-center mx-3">
+            <button type="submit" class="btn btn-light shadow n_button px-4" (click)="advancedSearch()">Submit</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- List Header -->
+    <div class="row pb-3" style="border-bottom: 1px solid #454d55">
+      <div (click)="sortTheBugs('title')" scope="col" class="col-1 n_header" style="margin-left: 98px;">Title
+        <span *ngIf="stateColumn === 'title'">
+          <span *ngIf="stateDirection ===2"> <fa-icon [icon]="faLongArrowAltUp"></fa-icon> </span>
+          <span *ngIf="stateDirection === 1"> <fa-icon [icon]="faLongArrowAltDown"></fa-icon> </span>
+        </span>
+      </div>
+      <div class="col-1"></div>
+      <div (click)="sortTheBugs('status')" scope="col" class="col n_header">Status
+        <span *ngIf="stateColumn === 'status'">
+          <span *ngIf="stateDirection ===2"> <fa-icon [icon]="faLongArrowAltUp"></fa-icon> </span>
+          <span *ngIf="stateDirection === 1"> <fa-icon [icon]="faLongArrowAltDown"></fa-icon> </span>
+        </span>
+      </div>
+      <div (click)="sortTheBugs('priority')" scope="col" class="col n_header">Priority
+        <span *ngIf="stateColumn === 'priority'">
+          <span *ngIf="stateDirection ===2"> <fa-icon [icon]="faLongArrowAltUp"></fa-icon> </span>
+          <span *ngIf="stateDirection === 1"> <fa-icon [icon]="faLongArrowAltDown"></fa-icon> </span>
+        </span>
+      </div>
+      <div (click)="sortTheBugs('reporter')" scope="col" class="col-2 n_header">Reporter
+        <span *ngIf="stateColumn === 'reporter'">
+          <span *ngIf="stateDirection ===2"> <fa-icon [icon]="faLongArrowAltUp"></fa-icon> </span>
+          <span *ngIf="stateDirection === 1"> <fa-icon [icon]="faLongArrowAltDown"></fa-icon> </span>
+        </span>
+      </div>
+      <div scope="col" class="col-2 n_date">Date Created </div>
+      <div scope="col" class="col d-flex justify-content-between">
+        <button class="btn btn-success shadow" [routerLink]="['/create']">
+          <div class="add" style="background-image: url(../../assets/add_60fps.svg)"></div>
+        </button>
+        <button class="btn btn-primary shadow" (click)="syncBugs()" id="syncIcon"> <img src="../../assets/refresh.svg" class="d-inline-block align-top" alt=""> </button>
+      </div>
+    </div>
+    <!-- Bug rows -->
+    <div *ngFor="let bug of bugList;let i=index;">
+      <div class="row text-center align-items-center py-2" style="border-top: 1px solid #454d55">
+        <div class="col-3 n_titles" [title]="bug.title"> {{ (bug.title && bug.title.length>20)? (bug.title | slice:0:17)+'...':bug.title}} </div>
+        <div class="col n_info">
+          <span *ngIf="bug.status ==='done'"> <fa-icon [icon]="faCheck" title="Done"></fa-icon> </span>
+          <span *ngIf="bug.status ==='rejected'"> <fa-icon [icon]="faTimes" title="Rejected"></fa-icon> </span>
+          <span *ngIf="bug.status ==='ready for test'"> <fa-icon [icon]="faExclamation" title="Ready for test"></fa-icon> </span>
+          <span *ngIf="bug.status ==='pending'"> Pending... </span>
+          <span *ngIf="bug.status !=='done' && bug.status !=='rejected' && bug.status !=='ready for test' && bug.status !=='pending'">Not Valid</span>
+        </div>
+        <div class="col n_info" id="priority" [ngClass]="{'light-theme': lightMode}">
+          <span *ngIf="bug.priority === 1" style="color: yellow;" id="priority1"> Minor </span>
+          <span *ngIf="bug.priority === 2" style="color: orange;" id="priority2"> Major </span>
+          <span *ngIf="bug.priority === 3" style="color: rgb(255, 42, 42)" id="priority3"> Critical </span>
+          <span *ngIf="bug.priority > 3 || bug.priority < 1" style="color: rgb(255, 42, 42);"> Not Valid </span>
+        </div>
+        <div class="col-2 n_info">{{bug.reporter | uppercase}}</div>
+        <div class="col-2 n_info">{{bug.createdAt | date}}</div>
+        <div class="col d-flex justify-content-between">
+          <button class="btn btn-secondary shadow" [routerLink]="['edit', bug.id]">
+            <div class="add" style="background-image: url(../../assets/edit_60fps.svg)"></div>
+          </button>
+          <button class="btn btn-secondary shadow" (click)="changeCollapseStatus(i)">
+            <div class="add" style="background-image: url(../../assets/comments_60fps.svg)"></div>
+          </button>
+          <button class="btn btn-danger shadow" (click)="delBug(bug.id)">
+            <div class="add" style="background-image: url(../../assets/eraser_60fps.svg)"></div>
+          </button>
+        </div>
+      </div>
+      <!-- Bug Comments Collapsable -->
+      <div *ngIf="!collapsedRow[i]">
+        <div id="collapseComments" [ngbCollapse]="collapsedRow[i]" class="n_comment shadow">
+          <div *ngIf="!bug.comments || bug.comments.length === 0" style="border-top: 1px solid #454d55">
+            <label class="text-light">No comments assigned to this bug. :(</label>
+          </div>
+          <div *ngIf="bug.comments && bug.comments.length !== 0" class="row n_row bg-dark" style="border-bottom: 1px solid #454d55; border-top: 1px solid #454d55">
+            <div class="col-3 n_info">
+              <span class="text-light text-center">Name</span>
+            </div>
+            <div class="col-9 text-left n_info">
+              <span class="text-light">Comment</span>
+            </div>
+          </div>
+          <div *ngFor="let comment of bug.comments">
+            <div class="row n_row">
+              <div class="col-3" style="border-right: 1px solid #454d55;">
+                <span class="text-light text-center">{{comment.reporter}}</span>
+              </div>
+              <div class="col-9 text-left">
+                <span class="text-light">{{comment.description}}</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <nav>
+    <ul class="pagination justify-content-center" [ngClass]="{'light-theme': lightMode}" style="font-size: 1.2em;width: 137px;margin: auto;">
+      <li class="page-item ">
+        <a class="page-link shadow" (click)="changePage('previous')" style="background-color: #343a40; color: #f8f9fa; border: 0px; border-radius: 0px 0px 0px 16px !important;">
+          <div class="add" style="background-image: url(../../assets/left_60fps.svg); margin-right: -18px; margin-bottom: -12px;">
+          </div>
+        </a>
+      </li>
+      <li class="page-item" style="font-size: 1.1em"><a class="page-link shadow" style="background-color: #343a40; color: #f8f9fa; border: 0px; width: max-content;">{{(filter.page + 1 )}} - {{maxPages}}</a></li>
+      <li class="page-item">
+        <a class="page-link shadow" (click)="changePage('next')" style="background-color: #343a40; color: #f8f9fa; border: 0px; border-radius: 0px 0px 16px 0px !important;">
+          <div class="add" style="background-image: url(../../assets/right_60fps.svg); margin-right: -18px; margin-bottom: -12px;">
+          </div>
+        </a>
+      </li>
+    </ul>
+  </nav>
+  <div class="container d-flex justify-content-center px-5 no-select">
+    <p class="small text-white" [ngClass]="{'light-theme': lightMode}">Table autosync: {{syncTime}}</p>
+  </div>
 </div>

@@ -1,19 +1,213 @@
-tbody th,
-td {
-  border-right: 1px solid #454d55 !important;
-  width: 222px;
+button {
+  border-radius: 32px;
+  width: 40px;
+  height: 40px;
 }
 
-.table-head {
-  font-size: 1.5rem;
+img {
+  width: 39px;
+  height: 39px;
+  margin-top: -6px;
+  margin-left: -12px;
 }
 
+.bg-deepdark {
+  background-color: #272727;
+  /* Calculating the height of main component substracting the header and footer from the viewport */
+  min-height: calc(100vh - 177px);
+}
 
-.table-head:hover {
+.n_header {
+  font-size: 1.5em;
+  font-weight: 400 !important;
+}
+
+.n_header:hover {
   text-shadow: 0px 0px 3px #fff;
   cursor: pointer;
 }
 
-fa-icon {
-  padding-left: 4px;
+.n_date {
+  font-size: 1.5em;
+  font-weight: 400 !important;
+}
+
+.n_titles {
+  font-size: 1.2em;
+  font-weight: 400 !important;
+}
+
+.n_info {
+  font-size: 1.2em;
+  font-weight: 300;
+}
+
+.n_container {
+  border-radius: 32px;
+}
+
+.n_comment {
+  background-color: #272727;
+  border-radius: 16px;
+  border: 3px solid #454d55;
+  margin-left: -24px;
+  margin-right: -24px;
+  margin-top: -58px;
+  padding-top: 58px !important;
+  padding-bottom: 8px;
+  margin-bottom: -1px;
+}
+
+.n_row {
+  margin-left: 0px;
+  margin-right: 0px;
+}
+
+.n_search {
+  border-radius: 32px;
+  width: 50px;
+  height: 50px;
+}
+
+.n_img {
+  width: 32px !important;
+  height: 32px !important;
+  margin-top: 1px !important;
+  margin-left: -4px !important;
+}
+
+.n_search_con {
+  background-color: #343a40;
+  border-radius: 32px;
+  border: 3px solid #17a2b8;
+}
+
+.n_filter {
+  border-radius: 32px;
+}
+
+.n_button {
+  width: -webkit-fill-available;
+  height: auto;
+  font-size: 1.2em;
+}
+
+#syncIcon:hover {
+  -webkit-animation: rotating 2s linear infinite;
+  -moz-animation: rotating 2s linear infinite;
+  -ms-animation: rotating 2s linear infinite;
+  -o-animation: rotating 2s linear infinite;
+  animation: rotating 2s linear infinite;
+}
+
+/* .light-theme buglist */
+#search.light-theme {
+  background-color: #cccccc !important;
+}
+
+#search.light-theme #searchBox {
+  background-color: #b8b8b8 !important;
+}
+
+#priority.light-theme {
+  background-color: #cccccc !important;
+}
+
+.light-theme ul li a {
+  background-color: #cccccc !important;
+  color: #343a40 !important;
+}
+
+#priority.light-theme #priority1 {
+  color: #fff934 !important;
+  font-weight: 400 !important;
+}
+
+#priority.light-theme #priority2 {
+  color: #ff9f10 !important;
+  font-weight: 400 !important;
+}
+
+#priority.light-theme #priority3 {
+  color: #ff1010 !important;
+  font-weight: 400 !important;
+}
+
+ul.light-theme .light-theme a,
+.light-theme h1,
+.light-theme .n_header,
+.light-theme .n_date,
+.light-theme .n_titles,
+.light-theme .n_info {
+  color: #343a40 !important;
+}
+
+.light-theme #collapseComments {
+  background-color: #cccccc !important;
+}
+
+.light-theme #collapseComments .n_info,
+.light-theme #collapseComments div span,
+.light-theme #collapseComments div label {
+  color: #343a40 !important;
+}
+
+
+@-webkit-keyframes rotating
+
+/* Safari and Chrome */
+  {
+  from {
+    -webkit-transform: rotate(0deg);
+    -o-transform: rotate(0deg);
+    transform: rotate(0deg);
+  }
+
+  to {
+    -webkit-transform: rotate(360deg);
+    -o-transform: rotate(360deg);
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes rotating {
+  from {
+    -ms-transform: rotate(0deg);
+    -moz-transform: rotate(0deg);
+    -webkit-transform: rotate(0deg);
+    -o-transform: rotate(0deg);
+    transform: rotate(0deg);
+  }
+
+  to {
+    -ms-transform: rotate(360deg);
+    -moz-transform: rotate(360deg);
+    -webkit-transform: rotate(360deg);
+    -o-transform: rotate(360deg);
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes play60 {
+  0% {
+    background-position: 0px 0px;
+  }
+
+  100% {
+    background-position: -3000px 0px;
+  }
+}
+
+.add {
+  animation-duration: 1000ms;
+  animation-timing-function: steps(60);
+  width: 50px;
+  height: 50px;
+  margin-left: -18px;
+  margin-top: -12px;
+  background-repeat: no-repeat;
+}
+
+.add:hover {
+  animation-name: play60;
 }
