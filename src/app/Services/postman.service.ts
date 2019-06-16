@@ -49,8 +49,7 @@ export class PostmanService {
   }
 
   getConfigResponse(): Observable<HttpResponse<Config>> {
-    return this.http.get<Config>(
-      this.endpoint, { observe: 'response' });
+    return this.http.get<Config>(this.endpoint, { observe: 'response' });
   }
 
   delBug(id) {
