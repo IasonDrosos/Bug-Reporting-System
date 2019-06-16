@@ -30,6 +30,7 @@ export class BugFormComponent implements OnInit, OnDestroy {
   buglist;
   alert: boolean;
   timeOutID;
+  downloadTimer;
 
   modeSub = new Subscription();
   lightMode: boolean;
@@ -79,14 +80,15 @@ export class BugFormComponent implements OnInit, OnDestroy {
         }
         this.postmanService.editBug(this.bug);
       } else {
+        this.bug.title = this.bug.title.toLowerCase();
         this.postmanService.createBug(this.bug);
         this.timeOutID = setTimeout(() => this.router.navigate(['']), 10000);
         let timeleft = 9;
-        const downloadTimer = setInterval(function() {
+        this.downloadTimer = setInterval(function() {
           document.getElementById('countdown').innerHTML = timeleft + ' seconds';
           timeleft -= 1;
           if (timeleft <= 0) {
-            clearInterval(downloadTimer);
+            clearInterval(this.downloadTimer);
           }
         }, 1000);
       }
@@ -101,6 +103,7 @@ export class BugFormComponent implements OnInit, OnDestroy {
 
   bugList() {
     clearTimeout(this.timeOutID);
+    clearInterval(this.downloadTimer);
     this.router.navigate(['']);
   }
 
