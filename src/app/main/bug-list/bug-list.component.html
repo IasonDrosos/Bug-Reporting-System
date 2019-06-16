@@ -1,19 +1,20 @@
 
 <div class="container flex-fill n_container no-select px-0 py-5" [ngClass]="{'light-theme': lightMode}">
   <div class="d-flex justify-content-center ">
-    <h1 class="display-4 text-light text-center mx-5 d-inline" [ngClass]="{hidden : bugID}">Reported Bugs</h1>
+      <button class="btn btn-info shadow n_search my-auto d-inline" (click)="filterShow()" style="margin-bottom: -74px !important; margin-left: 24px; z-index: 1;">
+          <!-- <img src="../../assets/search-solid.svg" class="d-inline align-center n_img"> -->
+          <div class="add" style="background-image: url(../../assets/search_60fps.svg)"></div>
+        </button>
+    <h1 class="display-4 text-light text-center m-auto d-inline" [ngClass]="{hidden : bugID}">Reported Bugs</h1>
     <!-- <button class="btn btn-info shadow n_search my-auto d-inline" (click)="filterShow()">
       <img src="../../assets/search-solid.svg" class="d-inline align-center n_img" alt="">
     </button> -->
   </div>
   <div class="bg-dark px-4 pt-4 pb-3 text-light text-center n_container shadow">
     <!-- Filter Collapse -->
-    <div class="row px-3 pb-3 d-flex">
-      <button class="btn btn-info shadow n_search my-auto d-inline" (click)="filterShow()">
-        <!-- <img src="../../assets/search-solid.svg" class="d-inline align-center n_img"> -->
-        <div class="add" style="background-image: url(../../assets/search_60fps.svg)"></div>
-      </button>
-      <div [ngbCollapse]="!filterState" class="flex-fill" id="search" [ngClass]="{'light-theme': lightMode}">
+    <div class="row ml-4 px-3 pb-3 d-flex">
+      <!-- <div [ngbCollapse]="!filterState" class="flex-fill" id="search" [ngClass]="{'light-theme': lightMode}"> -->
+          <div [@openClose]="!filterState ? 'open' : 'closed'" class="flex-fill" id="search" [ngClass]="{'light-theme': lightMode}">
         <div class="row ml-3 flex-fill justify-content-between">
           <div class="d-flex flex-grow-1 justify-content-between n_search_con shadow p-0 mx-3" id="searchBox">
             <input type="text" class="form-control n_info n_filter" #filterTitle="ngModel" name="filterTitle" [(ngModel)]="filter.title" id="filterTitle" placeholder="Title" minlength="3">
@@ -54,12 +55,13 @@
     </div>
     <!-- List Header -->
     <div class="row pb-3" style="border-bottom: 1px solid #454d55">
-      <div (click)="sortTheBugs('title')" scope="col" class="col-3 n_header">Title
+      <div (click)="sortTheBugs('title')" scope="col" class="col-1 n_header" style="margin-left: 98px;">Title
         <span *ngIf="stateColumn === 'title'">
           <span *ngIf="stateDirection ===2"> <fa-icon [icon]="faLongArrowAltUp"></fa-icon>  </span>
           <span *ngIf="stateDirection === 1"> <fa-icon [icon]="faLongArrowAltDown"></fa-icon> </span>
         </span>
       </div>
+      <div class="col-1"></div>
       <div (click)="sortTheBugs('status')" scope="col" class="col n_header">Status
         <span *ngIf="stateColumn === 'status'">
           <span *ngIf="stateDirection ===2"> <fa-icon [icon]="faLongArrowAltUp"></fa-icon> </span>

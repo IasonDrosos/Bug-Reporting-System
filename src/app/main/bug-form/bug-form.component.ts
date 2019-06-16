@@ -45,7 +45,7 @@ export class BugFormComponent implements OnInit, OnDestroy {
         this.bug = data;
         if (!this.bug.status) {
           this.bug.status = 'pending';
-        } else if (this.bug.status.toLowerCase() !== 'done' && this.bug.reporter.toLowerCase() !== 'rejected' && this.bug.reporter.toLowerCase() !== 'ready for test' && this.bug.reporter.toLowerCase() !== 'pending') {
+        } else if (this.bug.status.toLowerCase() !== 'done' && this.bug.status.toLowerCase() !== 'rejected' && this.bug.status.toLowerCase() !== 'ready for test' && this.bug.status.toLowerCase() !== 'pending') {
           this.bug.status = 'pending';
         } else {
           this.bug.status = this.bug.status.toLowerCase();

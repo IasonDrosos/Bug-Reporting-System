@@ -1,13 +1,36 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy, HostBinding } from '@angular/core';
 import { PostmanService } from 'src/app/Services/postman.service';
 import { faLongArrowAltUp } from '@fortawesome/free-solid-svg-icons';
 import { faLongArrowAltDown, faTimes, faCheck, faExclamation } from '@fortawesome/free-solid-svg-icons';
 import { Router } from '@angular/router';
 import { Filter } from 'src/app/models/filter.model';
 import { Subscription } from 'rxjs';
+import { trigger, state, style, transition, animate } from '@angular/animations';
+
 
 @Component({
   selector: 'app-bug-list',
+  animations: [
+    trigger('openClose', [
+      // ...
+      state('open', style({
+        height: '0px',
+        opacity: 0,
+        visibility: 'hidden'
+      })),
+      state('closed', style({
+        padding: '0px 0px 50px 0px',
+        height: '50px',
+        opacity: 1,
+      })),
+      transition('open => closed', [
+        animate('0.5s')
+      ]),
+      transition('closed => open', [
+        animate('0.5s')
+      ]),
+    ]),
+  ],
   templateUrl: './bug-list.component.html',
   styleUrls: ['./bug-list.component.css']
 })
@@ -139,6 +162,7 @@ export class BugListComponent implements OnInit, OnDestroy {
 
   filterShow() {
     this.filterState = !this.filterState;
+    console.log(this.filterState);
   }
 
 
@@ -155,7 +179,6 @@ export class BugListComponent implements OnInit, OnDestroy {
         this.filter.page--;
         console.log('previous');
         console.log(this.filter.page);
-
       }
     }
     this.filteredSearch();
@@ -167,8 +190,9 @@ export class BugListComponent implements OnInit, OnDestroy {
     this.postmanService.getBugsByFilter(this.filter).subscribe((data) => {
       this.maxPages = data.headers.get('totalpages');
       console.log(data);
-      this.bugList = data.body;
+      this.bugList = this.capitalizeData(data.body);
       this.commentsCollapseSystem(this.bugList.length);
+      console.log(this.bugList);
     });
   }
 

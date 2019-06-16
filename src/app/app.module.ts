@@ -12,6 +12,7 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { BugFormComponent } from './main/bug-form/bug-form.component';
 import { FormsModule } from '@angular/forms';
 import { CustHttpInterceptor } from './Services/interceptor.service';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 @NgModule({
   declarations: [
@@ -28,7 +29,8 @@ import { CustHttpInterceptor } from './Services/interceptor.service';
     HttpClientModule,
     FontAwesomeModule,
     FormsModule,
-    NgbModule
+    NgbModule,
+    BrowserAnimationsModule
   ],
   providers: [
     {
