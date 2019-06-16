@@ -1,7 +1,4 @@
-input,
-select,
-textarea,
-button {
+input,select,textarea,button {
   border-radius: 16px;
 }
 
@@ -20,7 +17,6 @@ button {
 
 .bg-deepdark {
   background-color: #272727;
-  /* Calculating the height of main component substracting the header and footer from the viewport */
   min-height: calc(100vh - 177px);
 }
 

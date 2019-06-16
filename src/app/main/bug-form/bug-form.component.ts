@@ -4,7 +4,6 @@ import { NgForm } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 
-
 @Component({
   selector: 'app-bug-form',
   templateUrl: './bug-form.component.html',
@@ -35,7 +34,6 @@ export class BugFormComponent implements OnInit, OnDestroy {
   modeSub = new Subscription();
   lightMode: boolean;
 
-
   constructor(private postmanService: PostmanService, private route: ActivatedRoute, private router: Router) { }
 
   ngOnInit() {
@@ -45,7 +43,7 @@ export class BugFormComponent implements OnInit, OnDestroy {
         this.bug = data;
         if (!this.bug.status) {
           this.bug.status = 'pending';
-        } else if (this.bug.status.toLowerCase() !== 'done' && this.bug.reporter.toLowerCase() !== 'rejected' && this.bug.reporter.toLowerCase() !== 'ready for test' && this.bug.reporter.toLowerCase() !== 'pending') {
+        } else if (this.bug.status.toLowerCase() !== 'done' && this.bug.status.toLowerCase() !== 'rejected' && this.bug.status.toLowerCase() !== 'ready for test' && this.bug.status.toLowerCase() !== 'pending') {
           this.bug.status = 'pending';
         } else {
           this.bug.status = this.bug.status.toLowerCase();
@@ -57,7 +55,6 @@ export class BugFormComponent implements OnInit, OnDestroy {
         } else {
           this.bug.reporter = this.bug.reporter.toLowerCase();
         }
-        console.log(this.bug);
       });
     }
 
@@ -69,7 +66,7 @@ export class BugFormComponent implements OnInit, OnDestroy {
     this.modeSub = this.postmanService.modeSubject.subscribe(lightMode => this.lightMode = lightMode);
   }
 
-  Print(form: NgForm) {
+  print(form: NgForm) {
     if (form.valid) {
       if (this.route.snapshot.params.id) {
         if (this.comment.reporter !== '' && this.comment.description !== '') {
@@ -81,7 +78,7 @@ export class BugFormComponent implements OnInit, OnDestroy {
         this.timeOutID = setTimeout(() => this.router.navigate(['']), 10000);
         let timeleft = 9;
         let downloadTimer = setInterval(function () {
-          document.getElementById("countdown").innerHTML = timeleft + " seconds";
+          document.getElementById('countdown').innerHTML = timeleft + ' seconds';
           timeleft -= 1;
           if (timeleft <= 0) {
             clearInterval(downloadTimer);
@@ -90,8 +87,6 @@ export class BugFormComponent implements OnInit, OnDestroy {
       }
       this.alert = true;
       setTimeout(() => this.alert = false, 10000);
-      console.log(this.bug);
-      console.log(form.status);
     }
   }
 
