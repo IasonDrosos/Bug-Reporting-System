@@ -11,6 +11,7 @@ import { Config } from 'protractor';
 export class PostmanService {
   lightMode = false;
   modeSubject = new Subject<boolean>();
+  endpoint = 'https://bug-report-system-server.herokuapp.com/bugs';
 
 
   httpOptions = {
@@ -20,7 +21,6 @@ export class PostmanService {
     })
   };
 
-  endpoint = 'https://bug-report-system-server.herokuapp.com/bugs';
   constructor(private http: HttpClient) { }
 
   getTheBugs(): Observable<HttpResponse<Config>> {

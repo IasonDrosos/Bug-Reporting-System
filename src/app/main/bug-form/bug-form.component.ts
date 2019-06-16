@@ -67,12 +67,7 @@ export class BugFormComponent implements OnInit, OnDestroy {
       this.lightMode = this.postmanService.getLocalStorageStatus();
     }
     this.modeSub = this.postmanService.modeSubject.subscribe(lightMode => this.lightMode = lightMode);
-
-
-
-
   }
-
 
   Print(form: NgForm) {
     if (form.valid) {
