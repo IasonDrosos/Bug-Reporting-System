@@ -12,7 +12,6 @@ import { trigger, state, style, transition, animate } from '@angular/animations'
   selector: 'app-bug-list',
   animations: [
     trigger('openClose', [
-      // ...
       state('open', style({
         height: '0px',
         opacity: 0,
@@ -41,7 +40,6 @@ export class BugListComponent implements OnInit, OnDestroy {
   faTimes = faTimes;
   faCheck = faCheck;
   faExclamation = faExclamation;
-
 
   // Θα τα κρατήσουμε και εδώ και στο object Filter????
   stateDirection = 0; // 0 none //1 asc // 2 desc
@@ -94,7 +92,6 @@ export class BugListComponent implements OnInit, OnDestroy {
   sortTheBugs(column: string) {
     clearInterval(this.interval);
     this.startTimer(300);
-
     this.filter.page = 0;
     this.stateColumn = column;
 
@@ -123,17 +120,9 @@ export class BugListComponent implements OnInit, OnDestroy {
     this.collapsedRow[rowIndex] = !this.collapsedRow[rowIndex];
   }
 
-  editBug(bugID) {
-    this.router.navigate(['edit', bugID]);
-  }
-
   delBug(id) {
     this.postmanService.delBug(id);
     this.syncBugs();
-  }
-
-  createBug() {
-    this.router.navigate(['create']);
   }
 
   syncBugs() {
@@ -165,7 +154,6 @@ export class BugListComponent implements OnInit, OnDestroy {
     console.log(this.filterState);
   }
 
-
   changePage(direction: string) {
     if (direction === 'next') {
       if (this.filter.page < this.maxPages - 1) {
@@ -173,7 +161,6 @@ export class BugListComponent implements OnInit, OnDestroy {
         console.log('next');
         console.log(this.filter.page);
       }
-
     } else if (direction === 'previous') {
       if (this.filter.page !== 0) {
         this.filter.page--;

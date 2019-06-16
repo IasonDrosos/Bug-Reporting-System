@@ -75,5 +75,4 @@ export class PostmanService {
     console.log(12);
   }
 
-
 }

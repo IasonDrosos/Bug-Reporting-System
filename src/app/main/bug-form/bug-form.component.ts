@@ -4,7 +4,6 @@ import { NgForm } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 
-
 @Component({
   selector: 'app-bug-form',
   templateUrl: './bug-form.component.html',
@@ -34,7 +33,6 @@ export class BugFormComponent implements OnInit, OnDestroy {
 
   modeSub = new Subscription();
   lightMode: boolean;
-
 
   constructor(private postmanService: PostmanService, private route: ActivatedRoute, private router: Router) { }
 
@@ -68,14 +66,9 @@ export class BugFormComponent implements OnInit, OnDestroy {
       this.lightMode = this.postmanService.getLocalStorageStatus();
     }
     this.modeSub = this.postmanService.modeSubject.subscribe(lightMode => this.lightMode = lightMode);
-
-
-
-
   }
 
-
-  Print(form: NgForm) {
+  print(form: NgForm) {
     if (form.valid) {
       if (this.route.snapshot.params.id) {
         if (this.comment.reporter !== '' && this.comment.description !== '') {
@@ -86,12 +79,12 @@ export class BugFormComponent implements OnInit, OnDestroy {
         this.postmanService.createBug(this.bug);
         this.timeOutID = setTimeout(() => this.router.navigate(['']), 10000);
         let timeleft = 9;
-        let downloadTimer = setInterval(function(){
-         document.getElementById("countdown").innerHTML = timeleft + " seconds";
-         timeleft -= 1;
-         if(timeleft <= 0){
-         clearInterval(downloadTimer);
-         }
+        let downloadTimer = setInterval(function () {
+          document.getElementById('countdown').innerHTML = timeleft + ' seconds';
+          timeleft -= 1;
+          if (timeleft <= 0) {
+            clearInterval(downloadTimer);
+          }
         }, 1000);
       }
       this.alert = true;
