@@ -7,7 +7,7 @@ import { map } from 'rxjs/operators';
 export class CustHttpInterceptor implements HttpInterceptor {
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
 
-    req = req.clone({setHeaders: {Authorization: "code.hub.ng5.token"}});
+    req = req.clone({ setHeaders: { Authorization: 'code.hub.ng5.token' } });
 
     return next.handle(req)
       .pipe(map(event => {

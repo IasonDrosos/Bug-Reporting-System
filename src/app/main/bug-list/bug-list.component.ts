@@ -54,8 +54,7 @@ export class BugListComponent implements OnInit, OnDestroy {
     });
 
     if (localStorage.getItem('lightMode') === null) {
-      this.lightMode = this.postmanService.lightMode;
-      this.modeSub = this.postmanService.modeSubject.subscribe(lightMode => this.lightMode = lightMode);
+      this.lightMode = false;
     } else {
       this.lightMode = this.postmanService.getLocalStorageStatus();
     }
@@ -167,7 +166,7 @@ export class BugListComponent implements OnInit, OnDestroy {
     this.postmanService.getBugsByFilter(this.filter).subscribe((data) => {
       this.maxPages = data.headers.get('totalpages');
       console.log(data);
-      this.bugList = data.body;
+      this.bugList = this.capitalizeData(data.body);
       this.commentsCollapseSystem(this.bugList.length);
     });
   }

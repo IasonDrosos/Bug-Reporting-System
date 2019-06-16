@@ -62,8 +62,7 @@ export class BugFormComponent implements OnInit, OnDestroy {
     }
 
     if (localStorage.getItem('lightMode') === null) {
-      this.lightMode = this.postmanService.lightMode;
-      this.modeSub = this.postmanService.modeSubject.subscribe(lightMode => this.lightMode = lightMode);
+      this.lightMode = false;
     } else {
       this.lightMode = this.postmanService.getLocalStorageStatus();
     }
@@ -86,12 +85,12 @@ export class BugFormComponent implements OnInit, OnDestroy {
         this.postmanService.createBug(this.bug);
         this.timeOutID = setTimeout(() => this.router.navigate(['']), 10000);
         let timeleft = 9;
-        let downloadTimer = setInterval(function(){
-         document.getElementById("countdown").innerHTML = timeleft + " seconds";
-         timeleft -= 1;
-         if(timeleft <= 0){
-         clearInterval(downloadTimer);
-         }
+        let downloadTimer = setInterval(function () {
+          document.getElementById("countdown").innerHTML = timeleft + " seconds";
+          timeleft -= 1;
+          if (timeleft <= 0) {
+            clearInterval(downloadTimer);
+          }
         }, 1000);
       }
       this.alert = true;

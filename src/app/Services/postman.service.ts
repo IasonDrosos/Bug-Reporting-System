@@ -1,6 +1,5 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders, HttpResponse } from '@angular/common/http';
-import { Sorting } from '../models/sorting.model';
 import { Bug } from '../models/bug.model';
 import { Filter } from '../models/filter.model';
 import { Observable, Subject } from 'rxjs';
@@ -11,9 +10,6 @@ import { Config } from 'protractor';
 })
 export class PostmanService {
   lightMode = false;
-
-
-
   modeSubject = new Subject<boolean>();
 
 
