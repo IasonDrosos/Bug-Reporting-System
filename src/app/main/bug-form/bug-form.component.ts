@@ -79,6 +79,10 @@ export class BugFormComponent implements OnInit, OnDestroy {
       if (this.route.snapshot.params.id) {
         if (this.comment.reporter !== '' && this.comment.description !== '') {
           this.bug.comments.push(this.comment);
+          this.comment = {
+            reporter: '',
+            description: ''
+          };
         }
         this.postmanService.editBug(this.bug);
       } else {
