@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy, ViewChild } from '@angular/core';
 import { PostmanService } from 'src/app/Services/postman.service';
 import { NgForm } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -10,6 +10,8 @@ import { Subscription } from 'rxjs';
   styleUrls: ['./bug-form.component.css']
 })
 export class BugFormComponent implements OnInit, OnDestroy {
+  @ViewChild('bugForm') myForm: NgForm;
+
   bugID: any = '';
 
   bug: any = {

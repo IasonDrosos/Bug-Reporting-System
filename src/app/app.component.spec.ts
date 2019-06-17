@@ -1,16 +1,23 @@
 import { TestBed, async } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
 import { AppComponent } from './app.component';
+import { BugFormComponent } from './main/bug-form/bug-form.component';
+import { BugListComponent } from './main/bug-list/bug-list.component';
+import { HeaderComponent } from './header/header.component';
+import { FooterComponent } from './footer/footer.component';
+import { MainComponent } from './main/main.component';
+import { FormsModule } from '@angular/forms';
+import { HttpClientModule } from '@angular/common/http';
+import { BrowserModule } from '@angular/platform-browser';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 describe('AppComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      imports: [
-        RouterTestingModule
-      ],
-      declarations: [
-        AppComponent
-      ],
+      imports: [ FormsModule, HttpClientModule, RouterTestingModule, BrowserModule, NgbModule, FontAwesomeModule, BrowserAnimationsModule],
+      declarations: [AppComponent, BugFormComponent, BugListComponent, HeaderComponent, FooterComponent, MainComponent],
     }).compileComponents();
   }));
 
@@ -26,10 +33,4 @@ describe('AppComponent', () => {
     expect(app.title).toEqual('bugReportSystemTeam3');
   });
 
-  it('should render title in a h1 tag', () => {
-    const fixture = TestBed.createComponent(AppComponent);
-    fixture.detectChanges();
-    const compiled = fixture.debugElement.nativeElement;
-    expect(compiled.querySelector('h1').textContent).toContain('Welcome to bugReportSystemTeam3!');
-  });
 });
